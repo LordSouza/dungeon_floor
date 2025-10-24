@@ -710,8 +710,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -460, y: 225}
-  m_SizeDelta: {x: 400, y: 180}
+  m_AnchoredPosition: {x: -460, y: 200}
+  m_SizeDelta: {x: 430, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &495486729
 MonoBehaviour:
@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 877743498}
   - component: {fileID: 877743497}
   m_Layer: 5
-  m_Name: Defend
+  m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1441,7 +1441,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 877743498}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 507557189}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnHealButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &877743498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2292,7 +2304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defend
+  m_text: Heal
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2884,8 +2896,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 460, y: 225}
-  m_SizeDelta: {x: 400, y: 180}
+  m_AnchoredPosition: {x: 460, y: 200}
+  m_SizeDelta: {x: 430, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2146600264
 MonoBehaviour:
@@ -2944,9 +2956,9 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 507557190}
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 645384013}
   - {fileID: 1988128763}
   - {fileID: 2054781061}
-  - {fileID: 507557190}
