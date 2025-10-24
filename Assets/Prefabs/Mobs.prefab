@@ -113,9 +113,9 @@ Transform:
   m_GameObject: {fileID: 5578893027049903389}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.4, y: -0.16, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8913789785196096987}
   m_Father: {fileID: 0}
@@ -135,5 +135,5 @@ MonoBehaviour:
   unitName: Cogumelo
   unitLevel: 1
   damage: 3
-  MaxHp: 0
-  currentHp: 0
+  MaxHp: 20
+  currentHp: 20
