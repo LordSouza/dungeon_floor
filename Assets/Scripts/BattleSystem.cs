@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,9 @@ public class BattleSystem : MonoBehaviour
 
     public Text dialogueText;
     
+    public BattleHUD playerHUD;
+    public BattleHUD enemyHUD;
+    
     public BattleState state;
     void Start()
     {
@@ -33,5 +37,7 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text = "You found a" + enemyUnit.unitName + ", kill it."; 
         
+        playerHUD.SetHUD(playerUnit);
+        enemyHUD.SetHUD(enemyUnit);
     }
 }
