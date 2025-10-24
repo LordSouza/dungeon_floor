@@ -28,6 +28,8 @@ public class BattleSystem : MonoBehaviour
     public AudioClip playerHealSound;
     public AudioClip enemyAttackSound;
     
+    public GameObject playerButtonsPanel;
+    
     void Start()
     {
         state = BattleState.START;
@@ -62,7 +64,7 @@ public class BattleSystem : MonoBehaviour
         enemyHUD.setHP(enemyUnit.currentHp);
         dialogueText.text = "ataque realizado com sucesso";
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
 
         if (isDead)
         {
@@ -77,6 +79,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
+        playerButtonsPanel.SetActive(false);
         audioSource.PlayOneShot(enemyAttackSound);
         
         dialogueText.text = enemyUnit.unitName + " te ataca!";
@@ -114,6 +117,7 @@ public class BattleSystem : MonoBehaviour
     void PlayerTurn()
     {
         dialogueText.text = "Escolha uma ação";
+        playerButtonsPanel.SetActive(true);
         
     }
 
@@ -125,7 +129,7 @@ public class BattleSystem : MonoBehaviour
         playerHUD.setHP(playerUnit.currentHp);
         dialogueText.text = "Voce se sente melhor!";
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
 
         state = BattleState.ENEMYTURN;
         StartCoroutine(EnemyTurn());
