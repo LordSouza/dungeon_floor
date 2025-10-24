@@ -22,6 +22,12 @@ public class BattleSystem : MonoBehaviour
     public BattleHUD enemyHUD;
     
     public BattleState state;
+    
+    public AudioSource audioSource;
+    public AudioClip playerAttackSound;
+    public AudioClip playerHealSound;
+    public AudioClip enemyAttackSound;
+    
     void Start()
     {
         state = BattleState.START;
@@ -36,7 +42,7 @@ public class BattleSystem : MonoBehaviour
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
 
-        dialogueText.text = "Voce encontrou um" + enemyUnit.unitName + ", mate-o."; 
+        dialogueText.text = "Voce encontrou um " + enemyUnit.unitName + ", mate-o."; 
         
         playerHUD.SetHUD(playerUnit);
         enemyHUD.SetHUD(enemyUnit);
@@ -49,6 +55,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerAttack()
     {
+        audioSource.PlayOneShot(playerAttackSound);
+        
         bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
         
         enemyHUD.setHP(enemyUnit.currentHp);
@@ -69,6 +77,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator EnemyTurn()
     {
+        audioSource.PlayOneShot(enemyAttackSound);
+        
         dialogueText.text = enemyUnit.unitName + " te ataca!";
         
         yield return new WaitForSeconds(0.5f);
@@ -109,6 +119,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator PlayerHeal()
     {
+        audioSource.PlayOneShot(playerHealSound);
         playerUnit.Heal(4);
         
         playerHUD.setHP(playerUnit.currentHp);

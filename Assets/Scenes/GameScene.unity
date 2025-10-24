@@ -803,6 +803,9 @@ MonoBehaviour:
   playerHUD: {fileID: 495486731}
   enemyHUD: {fileID: 2146600266}
   state: 0
+  audioSource: {fileID: 0}
+  playerAttackSound: {fileID: 8300000, guid: 33348944ffbcf6749af20ba5c7907635, type: 3}
+  enemyAttackSound: {fileID: 8300000, guid: b704d86ebe0ee1447b290ec1e4f88598, type: 3}
 --- !u!4 &507557190
 Transform:
   m_ObjectHideFlags: 0
