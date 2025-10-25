@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class MainUIController : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI finalScore;
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -14,12 +13,5 @@ public class MainUIController : MonoBehaviour
     {
         Application.Quit();
     }
-
-    private void Start()
-    {
-        if (finalScore != null)
-        {
-            finalScore.text = "Score: " + PlayerPrefs.GetInt("Score");
-        }
-    }
+    
 }

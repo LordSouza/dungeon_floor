@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
 
@@ -70,6 +71,8 @@ public class BattleSystem : MonoBehaviour
         {
             state = BattleState.WON;
             EndBattle();
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene("WinnerScene");
         } else
         {
             state = BattleState.ENEMYTURN;
@@ -96,6 +99,8 @@ public class BattleSystem : MonoBehaviour
         {
             state = BattleState.LOST;
             EndBattle();
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene("DefeatScene");
         }
         else
         {
