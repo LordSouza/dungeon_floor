@@ -928,6 +928,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5578893027049903389, guid: 1d53a06ab0c60c94b90d506c4d0a6e9a, type: 3}
   playerBattleStation: {fileID: 0}
   enemyBattleStation: {fileID: 0}
+  playerAnimator: {fileID: 0}
+  enemyAnimator: {fileID: 0}
   dialogueText: {fileID: 1309704284}
   playerHUD: {fileID: 495486731}
   enemyHUD: {fileID: 2146600266}
