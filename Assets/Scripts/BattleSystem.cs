@@ -48,7 +48,7 @@ public class BattleSystem : MonoBehaviour
 
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
-        //enemyAnimator = enemyGO.GetComponent<Animator>();
+        enemyAnimator = enemyGO.GetComponentInChildren<Animator>();
 
         dialogueText.text = "Voce encontrou um " + enemyUnit.unitName + ", mate-o."; 
         
@@ -66,16 +66,18 @@ public class BattleSystem : MonoBehaviour
         audioSource.PlayOneShot(playerAttackSound);
         playerAnimator.SetTrigger("attack");
         playerAnimator.SetInteger("random", Random.Range(1, 4));
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
+        enemyAnimator.SetTrigger("hit");
         
+        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
         enemyHUD.setHP(enemyUnit.currentHp);
         dialogueText.text = "ataque realizado com sucesso";
         
         yield return new WaitForSeconds(1f);
-
+        
         if (isDead)
         {
             state = BattleState.WON;
+            enemyAnimator.SetTrigger("morre");
             EndBattle();
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("WinnerScene");
@@ -90,12 +92,13 @@ public class BattleSystem : MonoBehaviour
     {
         playerButtonsPanel.SetActive(false);
         audioSource.PlayOneShot(enemyAttackSound);
-        playerAnimator.SetTrigger("hit");
+        enemyAnimator.SetTrigger("attack");
 
         dialogueText.text = enemyUnit.unitName + " te ataca!";
        
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         
+        playerAnimator.SetTrigger("hit");
 
         bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
         
