@@ -14,6 +14,9 @@ public class BattleSystem : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
+    public Animator playerAnimator;
+    public Animator enemyAnimator;
+    
     private Unit playerUnit;
     private Unit enemyUnit;
 
@@ -41,9 +44,11 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
         playerUnit = playerGO.GetComponent<Unit>();
+        playerAnimator = playerGO.GetComponentInChildren<Animator>();
 
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
+        //enemyAnimator = enemyGO.GetComponent<Animator>();
 
         dialogueText.text = "Voce encontrou um " + enemyUnit.unitName + ", mate-o."; 
         
@@ -59,13 +64,14 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerAttack()
     {
         audioSource.PlayOneShot(playerAttackSound);
-        
+        playerAnimator.SetTrigger("attack");
+        playerAnimator.SetInteger("random", Random.Range(1, 4));
         bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
         
         enemyHUD.setHP(enemyUnit.currentHp);
         dialogueText.text = "ataque realizado com sucesso";
         
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(1f);
 
         if (isDead)
         {
@@ -84,16 +90,18 @@ public class BattleSystem : MonoBehaviour
     {
         playerButtonsPanel.SetActive(false);
         audioSource.PlayOneShot(enemyAttackSound);
-        
+        playerAnimator.SetTrigger("hit");
+
         dialogueText.text = enemyUnit.unitName + " te ataca!";
+       
+        yield return new WaitForSeconds(1f);
         
-        yield return new WaitForSeconds(0.5f);
 
         bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
         
         playerHUD.setHP(playerUnit.currentHp);
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         if (isDead)
         {
