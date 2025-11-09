@@ -6,7 +6,7 @@ public class MainUIController : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("MapScene");
     }
 
     public void Exit()

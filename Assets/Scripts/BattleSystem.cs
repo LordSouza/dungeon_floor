@@ -78,7 +78,7 @@ public class BattleSystem : MonoBehaviour
             state = BattleState.WON;
             EndBattle();
             yield return new WaitForSeconds(1f);
-            SceneManager.LoadScene("WinnerScene");
+            SceneManager.LoadScene("MapScene");
         } else
         {
             state = BattleState.ENEMYTURN;

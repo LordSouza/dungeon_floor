@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Foreground
   layers:
   - Default
   - TransparentFX
@@ -11,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Player
+  - Foreground
+  - Enemy
   - 
   - 
   - 
@@ -46,6 +47,18 @@ TagManager:
     locked: 0
   - name: PlayerMobs
     uniqueID: 1086922677
+    locked: 0
+  - name: Foreground
+    uniqueID: 3209270827
+    locked: 0
+  - name: Enemy
+    uniqueID: 4183149359
+    locked: 0
+  - name: Player
+    uniqueID: 3773390797
+    locked: 0
+  - name: VFX
+    uniqueID: 114970721
     locked: 0
   m_RenderingLayers:
   - Default
