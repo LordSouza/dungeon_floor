@@ -96,7 +96,6 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text = enemyUnit.unitName + " te ataca!";
        
-        yield return new WaitForSeconds(1.5f);
         
         playerAnimator.SetTrigger("hit");
 
