@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
@@ -17,15 +16,16 @@ public class BattleSystem : MonoBehaviour
     public Animator playerAnimator;
     public Animator enemyAnimator;
     
-    private Unit playerUnit;
-    private Unit enemyUnit;
-
+    private Unit _playerUnit;
+    private Unit _enemyUnit;
+    
     public TextMeshProUGUI dialogueText;
     
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
     
     public BattleState state;
+    public QteController qteController;
     
     public AudioSource audioSource;
     public AudioClip playerAttackSound;
@@ -34,6 +34,8 @@ public class BattleSystem : MonoBehaviour
     
     public GameObject playerButtonsPanel;
     
+    public int extraDamageFromQte;
+    public int extraHealingFromQte;
     void Start()
     {
         state = BattleState.START;
@@ -42,18 +44,18 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
-        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
-        playerUnit = playerGO.GetComponent<Unit>();
-        playerAnimator = playerGO.GetComponentInChildren<Animator>();
+        GameObject playerGo = Instantiate(playerPrefab, playerBattleStation);
+        _playerUnit = playerGo.GetComponent<Unit>();
+        playerAnimator = playerGo.GetComponentInChildren<Animator>();
 
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
-        enemyUnit = enemyGO.GetComponent<Unit>();
-        enemyAnimator = enemyGO.GetComponentInChildren<Animator>();
+        GameObject enemyGo = Instantiate(enemyPrefab, enemyBattleStation);
+        _enemyUnit = enemyGo.GetComponent<Unit>();
+        enemyAnimator = enemyGo.GetComponentInChildren<Animator>();
 
-        dialogueText.text = "Voce encontrou um " + enemyUnit.unitName + ", mate-o."; 
+        dialogueText.text = "Voce encontrou um " + _enemyUnit.unitName + ", mate-o."; 
         
-        playerHUD.SetHUD(playerUnit);
-        enemyHUD.SetHUD(enemyUnit);
+        playerHUD.SetHUD(_playerUnit);
+        enemyHUD.SetHUD(_enemyUnit);
 
         yield return new WaitForSeconds(1f);
         
@@ -61,15 +63,17 @@ public class BattleSystem : MonoBehaviour
         PlayerTurn();
     }
 
-    IEnumerator PlayerAttack()
+    public IEnumerator PlayerAttack()
     {
         audioSource.PlayOneShot(playerAttackSound);
         playerAnimator.SetTrigger("attack");
         playerAnimator.SetInteger("random", Random.Range(1, 4));
         enemyAnimator.SetTrigger("hit");
         
-        bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
-        enemyHUD.setHP(enemyUnit.currentHp);
+        int totalDamage = _playerUnit.damage + extraDamageFromQte;
+        extraDamageFromQte = 0;
+        bool isDead = _enemyUnit.TakeDamage(totalDamage);
+        enemyHUD.setHP(_enemyUnit.currentHp);
         dialogueText.text = "ataque realizado com sucesso";
         
         yield return new WaitForSeconds(1f);
@@ -91,34 +95,68 @@ public class BattleSystem : MonoBehaviour
     IEnumerator EnemyTurn()
     {
         playerButtonsPanel.SetActive(false);
-        audioSource.PlayOneShot(enemyAttackSound);
-        enemyAnimator.SetTrigger("attack");
 
-        dialogueText.text = enemyUnit.unitName + " te ataca!";
-       
-        
-        yield return new WaitForSeconds(0.5f);
-        
-        playerAnimator.SetTrigger("hit");
+        dialogueText.text = _enemyUnit.unitName + " está pensando...";
+        yield return new WaitForSeconds(0.8f);
 
-        bool isDead = playerUnit.TakeDamage(enemyUnit.damage);
-        
-        playerHUD.setHP(playerUnit.currentHp);
-        
-        yield return new WaitForSeconds(1f);
+        float rnd = Random.value; 
 
-        if (isDead)
+        float chanceHeal = 0.25f;  
+        float chanceBuff = 0.15f;  
+
+        bool didAction = false;
+        
+        if (rnd < chanceHeal)
         {
-            state = BattleState.LOST;
-            EndBattle();
+            int healAmount = Random.Range(2, 5);
+            _enemyUnit.Heal(healAmount);
+            enemyHUD.setHP(_enemyUnit.currentHp);
+
+            dialogueText.text = _enemyUnit.unitName + " recuperou " + healAmount + " de vida!";
+
+            yield return new WaitForSeconds(1.2f);
+
+            didAction = true;
+        }
+        else if (rnd < chanceHeal + chanceBuff)
+        {
+            int bonus = Random.Range(3, 7);
+            _enemyUnit.damage += bonus;
+            dialogueText.text = _enemyUnit.unitName + " ficou mais forte! (+ " + bonus + " dano)";
+
+            yield return new WaitForSeconds(1.2f);
+
+            didAction = true;
+        }
+        
+        if (!didAction)
+        {
+            audioSource.PlayOneShot(enemyAttackSound);
+
+            enemyAnimator.SetTrigger("attack");
+            dialogueText.text = _enemyUnit.unitName + " te ataca!";
+
+            yield return new WaitForSeconds(0.5f);
+
+            playerAnimator.SetTrigger("hit");
+
+            bool isDead = _playerUnit.TakeDamage(_enemyUnit.damage);
+            playerHUD.setHP(_playerUnit.currentHp);
+
             yield return new WaitForSeconds(1f);
-            SceneManager.LoadScene("DefeatScene");
+
+            if (isDead)
+            {
+                state = BattleState.LOST;
+                EndBattle();
+                yield return new WaitForSeconds(1f);
+                SceneManager.LoadScene("DefeatScene");
+                yield break;
+            }
         }
-        else
-        {
-            state = BattleState.PLAYERTURN;
-            PlayerTurn();
-        }
+        
+        state = BattleState.PLAYERTURN;
+        PlayerTurn();
     }
     void EndBattle()
     {
@@ -138,15 +176,19 @@ public class BattleSystem : MonoBehaviour
         
     }
 
-    IEnumerator PlayerHeal()
+    public IEnumerator PlayerHeal()
     {
         audioSource.PlayOneShot(playerHealSound);
-        playerUnit.Heal(4);
-        
-        playerHUD.setHP(playerUnit.currentHp);
-        dialogueText.text = "Voce se sente melhor!";
-        
-        yield return new WaitForSeconds(0.05f);
+
+        int totalHeal = 4 + extraHealingFromQte;
+        extraHealingFromQte = 0;
+
+        _playerUnit.Heal(totalHeal);
+
+        playerHUD.setHP(_playerUnit.currentHp);
+        dialogueText.text = "Você recuperou vida!";
+
+        yield return new WaitForSeconds(1f);
 
         state = BattleState.ENEMYTURN;
         StartCoroutine(EnemyTurn());
@@ -157,7 +199,18 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
-        StartCoroutine(PlayerAttack());
+        playerButtonsPanel.SetActive(false);
+
+        if (qteController != null)
+        {
+            qteController.StartQte(QteType.Attack);
+            dialogueText.text = "Repita a sequência para atacar!";
+        }
+        else
+        {
+            StartCoroutine(PlayerAttack());
+        }
+        
     }
     
     public void OnHealButton()
@@ -165,7 +218,23 @@ public class BattleSystem : MonoBehaviour
         if (state != BattleState.PLAYERTURN)
             return;
 
-        StartCoroutine(PlayerHeal());
+        playerButtonsPanel.SetActive(false);
+
+        if (qteController != null)
+        {
+            qteController.StartQte(QteType.Heal);
+            dialogueText.text = "Repita a sequência para curar!";
+        }
+        else
+        {
+            StartCoroutine(PlayerHeal());
+        }
+    }
+    
+    public void QteFailed()
+    {
+        dialogueText.text = "Falhou no evento";
+        StartCoroutine(EnemyTurn());
     }
 
 }
