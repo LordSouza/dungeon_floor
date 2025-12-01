@@ -83,6 +83,12 @@ public class BattleSystem : MonoBehaviour
             state = BattleState.WON;
             enemyAnimator.SetTrigger("morre");
             EndBattle();
+            
+            GameData data = GameData.Load();
+            data.defeatedEnemies.Add(data.currentEnemyId);
+            data.currentEnemyId = null;
+            data.Save();
+            
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("MapScene");
         } else
@@ -162,7 +168,8 @@ public class BattleSystem : MonoBehaviour
     {
         if (state == BattleState.WON)
         {
-            dialogueText.text = "Voce ganhou a batalha!";
+            GameManager.Instance.MarkEnemyAsDead(GameManager.Instance.data.lastEnemyID);
+            SceneManager.LoadScene("MapScene");
         } else if (state == BattleState.LOST)
         {
             dialogueText.text = "Voce foi derrotado!";

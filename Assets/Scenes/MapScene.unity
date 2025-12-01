@@ -36627,6 +36627,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 917166939}
     m_Modifications:
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e4
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -36709,6 +36713,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 917166939}
     m_Modifications:
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e6
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -36895,6 +36903,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 917166939}
     m_Modifications:
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e5
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -37008,6 +37020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 917166939}
     m_Modifications:
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e1
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -37611,6 +37627,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e2
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -37717,6 +37737,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 917166939}
     m_Modifications:
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyId
+      value: e3
+      objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
       value: 9

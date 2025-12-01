@@ -1,20 +1,23 @@
-using System;
-
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
     Rigidbody2D _enemyPlayerRb;
     [SerializeField] GameObject enemyPoof;
-    float enemyDir = 1;
+    public string enemyId;
+    float _enemyDir = 1;
+    
     void Awake()
     {
         _enemyPlayerRb = GetComponent<Rigidbody2D>();
+        if (GameManager.Instance.data.deadEnemies.Contains(enemyId))
+            Destroy(gameObject);
     }
 
     void FixedUpdate()
     {
-        _enemyPlayerRb.linearVelocityX = 2 * enemyDir;
+        _enemyPlayerRb.linearVelocityX = 2 * _enemyDir;
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -35,7 +38,7 @@ public class Enemy : MonoBehaviour
     void FlipSprite()
     {
         transform.localScale = new Vector3(-Mathf.Sign(_enemyPlayerRb.linearVelocityX),1, 1);
-        enemyDir *= -1;
+        _enemyDir *= -1;
     }
     
 }

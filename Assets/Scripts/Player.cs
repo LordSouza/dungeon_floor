@@ -1,18 +1,17 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     Rigidbody2D _playerRb;
     Animator _playerSpriteAnimator;
-    BoxCollider2D _feetCollider;
+    [FormerlySerializedAs("_feetCollider")] [SerializeField] BoxCollider2D feetCollider;
     
     float _xDir;
     bool _canDoubleJump;
-    bool takingDmg;
+    bool _takingDmg;
     
     [SerializeField] float speedX;
     [SerializeField] float jumpIntensity;
@@ -21,12 +20,11 @@ public class Player : MonoBehaviour
     {
         _playerRb = GetComponent<Rigidbody2D>();
         _playerSpriteAnimator = GetComponentInChildren<Animator>();
-        _feetCollider = GetComponentInChildren<BoxCollider2D>();
     }
 
     void OnJump(InputValue inputValue)
     {
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
         {
             _playerRb.linearVelocityY = jumpIntensity;
             _canDoubleJump = true;
@@ -50,7 +48,7 @@ public class Player : MonoBehaviour
     
     void MovePlayer()
     {
-        if (takingDmg)
+        if (_takingDmg)
             return;
         _playerRb.linearVelocityX = _xDir * speedX;
         bool isRunning = Mathf.Abs(_playerRb.linearVelocityX) > Mathf.Epsilon;
@@ -72,12 +70,19 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-
         Enemy e = other.gameObject.GetComponent<Enemy>();
-        
+
         if (e != null)
         {
+            GameManager.Instance.data.playerX = transform.position.x;
+            GameManager.Instance.data.playerY = transform.position.y;
+            
+            GameManager.Instance.data.lastEnemyID = e.enemyId;
+
+            GameManager.Instance.Save();
+
             SceneManager.LoadScene("GameScene");
         }
     }
+
 }
