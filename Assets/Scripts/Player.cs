@@ -78,6 +78,8 @@ public class Player : MonoBehaviour
             GameManager.Instance.data.playerY = transform.position.y;
             
             GameManager.Instance.data.lastEnemyID = e.enemyId;
+            GameManager.Instance.data.currentEnemyLevel = e.enemyLevel;
+            
 
             GameManager.Instance.Save();
 

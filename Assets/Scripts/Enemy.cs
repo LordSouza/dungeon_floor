@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject enemyPoof;
     public string enemyId;
     float _enemyDir = 1;
-    
+    public int enemyLevel;
     void Awake()
     {
         _enemyPlayerRb = GetComponent<Rigidbody2D>();
@@ -22,10 +22,15 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        
         if(other.CompareTag("Foreground"))    
             FlipSprite();
-        if(other.CompareTag("Player"))    
+        if (other.CompareTag("Player"))
+        {
+            GameManager.Instance.data.currentEnemyLevel = enemyLevel;
+            GameManager.Instance.data.lastEnemyID = enemyId;
             Destroy();
+        }
     }
 
     public void Destroy()

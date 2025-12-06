@@ -135,6 +135,22 @@ public class QteController : MonoBehaviour
         sequenceText.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
 
-        _battleSystem.QteFailed(); 
+        // se o player fizer parcialmente o quicktime recebe um bonus parcial
+        // se zerar o ataque dele vai ser o base
+        int acertos = _playerIndex;
+        int bonusParcial = acertos * 1;
+        
+        // Se ataque > ataque normal
+        if (_currentType == QteType.Attack)
+        {
+            _battleSystem.extraDamageFromQte = bonusParcial;
+            _battleSystem.StartCoroutine(_battleSystem.PlayerAttack());
+        }
+        // Se cura > cura normal
+        else if (_currentType == QteType.Heal)
+        {
+            _battleSystem.extraHealingFromQte = bonusParcial;
+            _battleSystem.StartCoroutine(_battleSystem.PlayerHeal());
+        }
     }
 }

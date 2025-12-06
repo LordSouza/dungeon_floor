@@ -213,6 +213,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbabb79e52a06fe4a804336124cd6ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    playerX: 0
+    playerY: 0
+    lastEnemyID: 
+    hasSpawnedOnce: 0
+    deadEnemies: []
+    playerLevel: 1
+    playerXP: 0
+    playerMaxHP: 20
+    playerDamage: 5
+    currentEnemyLevel: 1
 --- !u!1 &416391104
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +319,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 341247369}
+        m_TargetAssemblyTypeName: MainUIController, Assembly-CSharp
+        m_MethodName: Resetar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &416391107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,6 +1707,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361081668}
   m_CullTransparentMesh: 1
+--- !u!1 &1382590505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1382590507}
+  - component: {fileID: 1382590506}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1382590506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382590505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76933aba0c87a4d4f9984d9f42ec1863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    playerX: 0
+    playerY: 0
+    lastEnemyID: 
+    hasSpawnedOnce: 0
+    deadEnemies: []
+    playerLevel: 1
+    playerXP: 0
+    playerMaxHP: 20
+    playerDamage: 5
+    currentEnemyLevel: 1
+--- !u!4 &1382590507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382590505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1386509, y: -4.5545535, z: 3.062009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1500837913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,3 +1993,4 @@ SceneRoots:
   - {fileID: 565934525}
   - {fileID: 341247368}
   - {fileID: 707015027}
+  - {fileID: 1382590507}

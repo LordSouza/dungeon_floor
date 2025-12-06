@@ -44,12 +44,24 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
+        // instanciar o jogador
         GameObject playerGo = Instantiate(playerPrefab, playerBattleStation);
         _playerUnit = playerGo.GetComponent<Unit>();
         playerAnimator = playerGo.GetComponentInChildren<Animator>();
+        _playerUnit.unitLevel = GameManager.Instance.data.playerLevel;
+        _playerUnit.currentXP = GameManager.Instance.data.playerXP;
 
+        _playerUnit.MaxHp = GameManager.Instance.data.playerMaxHP;
+        _playerUnit.currentHp = _playerUnit.MaxHp;
+
+        _playerUnit.damage = GameManager.Instance.data.playerDamage;
+        
+        
+        // instanciar o mob
         GameObject enemyGo = Instantiate(enemyPrefab, enemyBattleStation);
         _enemyUnit = enemyGo.GetComponent<Unit>();
+        _enemyUnit.InitializeEnemy(GameManager.Instance.data.currentEnemyLevel);
+        
         enemyAnimator = enemyGo.GetComponentInChildren<Animator>();
 
         dialogueText.text = "Voce encontrou um " + _enemyUnit.unitName + ", mate-o."; 
@@ -84,10 +96,22 @@ public class BattleSystem : MonoBehaviour
             enemyAnimator.SetTrigger("morre");
             EndBattle();
             
-            GameData data = GameData.Load();
-            data.defeatedEnemies.Add(data.currentEnemyId);
-            data.currentEnemyId = null;
-            data.Save();
+            // xp para o player
+            int xpGanho = _enemyUnit.unitLevel * 5; 
+            _playerUnit.GainXP(xpGanho);
+            
+            // Salvar os dados
+            SaveData data = GameManager.Instance.data;
+            data.playerLevel = _playerUnit.unitLevel;
+            data.playerXP = _playerUnit.currentXP;
+            data.playerMaxHP = _playerUnit.MaxHp;
+            data.playerDamage = _playerUnit.damage;
+            if (!string.IsNullOrEmpty(data.lastEnemyID))
+            {
+                data.deadEnemies.Add(data.lastEnemyID);
+                data.lastEnemyID = null;
+            }
+            GameManager.Instance.Save();
             
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("MapScene");
@@ -107,8 +131,8 @@ public class BattleSystem : MonoBehaviour
 
         float rnd = Random.value; 
 
-        float chanceHeal = 0.25f;  
-        float chanceBuff = 0.15f;  
+        float chanceHeal = 0.10f;  
+        float chanceBuff = 0.05f;  
 
         bool didAction = false;
         
@@ -236,12 +260,6 @@ public class BattleSystem : MonoBehaviour
         {
             StartCoroutine(PlayerHeal());
         }
-    }
-    
-    public void QteFailed()
-    {
-        dialogueText.text = "Falhou no evento";
-        StartCoroutine(EnemyTurn());
     }
 
 }

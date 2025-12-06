@@ -213,6 +213,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbabb79e52a06fe4a804336124cd6ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    playerX: 0
+    playerY: 0
+    lastEnemyID: 
+    hasSpawnedOnce: 0
+    deadEnemies: []
+    playerLevel: 1
+    playerXP: 0
+    playerMaxHP: 20
+    playerDamage: 5
+    currentEnemyLevel: 1
 --- !u!1 &416391104
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +319,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+      - m_Target: {fileID: 341247369}
+        m_TargetAssemblyTypeName: MainUIController, Assembly-CSharp
+        m_MethodName: Resetar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &416391107
 MonoBehaviour:
   m_ObjectHideFlags: 0
