@@ -6,24 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ac50339d-f553-4f05-8a92-79f66414f87f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dungeon_floor/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dungeon_floor/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DefeatScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DefeatScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenuScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenuScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MapScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MapScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/WinnerScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/WinnerScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BattleQuickTIme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BattleQuickTIme.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BattleSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BattleSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameData.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapSceneLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapSceneLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainUIController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainUIController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Unit.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/IconBitOne SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/IconBitOne SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +136,7 @@
       <workItem from="1764441563457" duration="1271000" />
       <workItem from="1764546530410" duration="3185000" />
       <workItem from="1764550977025" duration="765000" />
-      <workItem from="1765043057557" duration="7473000" />
+      <workItem from="1765043057557" duration="8423000" />
     </task>
     <servers />
   </component>

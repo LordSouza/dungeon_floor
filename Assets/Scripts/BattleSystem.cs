@@ -52,7 +52,7 @@ public class BattleSystem : MonoBehaviour
         _playerUnit.currentXP = GameManager.Instance.data.playerXP;
 
         _playerUnit.MaxHp = GameManager.Instance.data.playerMaxHP;
-        _playerUnit.currentHp = _playerUnit.MaxHp;
+        _playerUnit.currentHp = GameManager.Instance.data.playerCurrentHP;
 
         _playerUnit.damage = GameManager.Instance.data.playerDamage;
         
@@ -106,12 +106,16 @@ public class BattleSystem : MonoBehaviour
             data.playerXP = _playerUnit.currentXP;
             data.playerMaxHP = _playerUnit.MaxHp;
             data.playerDamage = _playerUnit.damage;
+            
+            GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+            GameManager.Instance.Save();
             if (!string.IsNullOrEmpty(data.lastEnemyID))
             {
                 data.deadEnemies.Add(data.lastEnemyID);
                 data.lastEnemyID = null;
             }
             GameManager.Instance.Save();
+            
             
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("MapScene");
@@ -172,7 +176,9 @@ public class BattleSystem : MonoBehaviour
 
             bool isDead = _playerUnit.TakeDamage(_enemyUnit.damage);
             playerHUD.setHP(_playerUnit.currentHp);
-
+            GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+            GameManager.Instance.Save();
+            
             yield return new WaitForSeconds(1f);
 
             if (isDead)
@@ -196,6 +202,8 @@ public class BattleSystem : MonoBehaviour
             SceneManager.LoadScene("MapScene");
         } else if (state == BattleState.LOST)
         {
+            GameManager.Instance.data.playerCurrentHP = GameManager.Instance.data.playerMaxHP;
+            GameManager.Instance.Save();
             dialogueText.text = "Voce foi derrotado!";
         }
     }
@@ -218,7 +226,10 @@ public class BattleSystem : MonoBehaviour
 
         playerHUD.setHP(_playerUnit.currentHp);
         dialogueText.text = "Você recuperou vida!";
-
+        
+        GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+        GameManager.Instance.Save();
+        
         yield return new WaitForSeconds(1f);
 
         state = BattleState.ENEMYTURN;

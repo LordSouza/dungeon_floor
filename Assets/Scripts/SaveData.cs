@@ -18,6 +18,8 @@ public class SaveData
     public int playerXP = 0;
     public int playerMaxHP = 20;
     public int playerDamage = 5;
+    public int playerCurrentHP = 20;
+
     
     // inimigo stats
     public int currentEnemyLevel = 1;
