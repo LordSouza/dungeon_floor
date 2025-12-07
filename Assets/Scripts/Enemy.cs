@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         _enemyPlayerRb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.data.deadEnemies.Contains(enemyId))
-            Destroy(gameObject);
+//        if (GameManager.Instance.data.deadEnemies.Contains(enemyId))
+//           Destroy(gameObject);
     }
 
     void FixedUpdate()
