@@ -293,6 +293,42 @@ public class BattleSystem : MonoBehaviour
         }
     }
     
+    public void OnUseItemButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+        
+        // Check if player has fish
+        if (GameManager.Instance.data.fishCount <= 0)
+        {
+            dialogueText.text = "Você não tem nenhum peixe!";
+            return;
+        }
+        
+        playerButtonsPanel.SetActive(false);
+        StartCoroutine(UseItem());
+    }
+    
+    IEnumerator UseItem()
+    {
+        // Use fish item
+        int healAmount = 12; // Fish heals 12 HP
+        _playerUnit.Heal(healAmount);
+        
+        // Decrement fish count
+        GameManager.Instance.data.fishCount--;
+        GameManager.Instance.Save();
+        
+        dialogueText.text = $"Você usou um peixe! Recuperou {healAmount} HP! (Restam: {GameManager.Instance.data.fishCount})";
+        
+        playerHUD.setHP(_playerUnit.currentHp);
+        
+        yield return new WaitForSeconds(1.5f);
+        
+        state = BattleState.ENEMYTURN;
+        StartCoroutine(EnemyTurn());
+    }
+    
     // Calculate XP reward based on level difference for more interesting progression
     int CalculateXPReward(int playerLevel, int enemyLevel)
     {
