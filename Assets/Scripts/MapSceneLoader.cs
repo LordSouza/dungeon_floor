@@ -84,16 +84,10 @@ public class MapSceneLoader : MonoBehaviour
         if (!data.enableRandomSpawns || data.enemySpawnPoints.Count == 0)
             return;
         
-        // Check if this enemy was previously defeated (respawning)
-        var wasDefeated = data.enemyDeathRecords.Any(r => r.enemyId == enemy.enemyId && r.deathCount > 0);
-        
-        if (wasDefeated)
-        {
-            // Enemy respawned - move to random spawn point
-            var randomSpawn = data.enemySpawnPoints[Random.Range(0, data.enemySpawnPoints.Count)];
-            enemy.transform.position = new Vector3(randomSpawn.x, randomSpawn.y, enemy.transform.position.z);
-            Debug.Log($"Respawned {enemy.enemyId} at random position: ({randomSpawn.x}, {randomSpawn.y})");
-        }
+        // ALWAYS randomize position - every map load!
+        var randomSpawn = data.enemySpawnPoints[Random.Range(0, data.enemySpawnPoints.Count)];
+        enemy.transform.position = new Vector3(randomSpawn.x, randomSpawn.y, enemy.transform.position.z);
+        Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y})");
     }
     
     void MigrateOldDeadEnemies(SaveData data)
