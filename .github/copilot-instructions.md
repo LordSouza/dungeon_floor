@@ -91,10 +91,10 @@ Uses **BattleState enum**: `START → PLAYERTURN → ENEMYTURN → (WON|LOST)`
 - BattleSystem.cs manages AudioSource with playerAttackSound, playerHealSound, enemyAttackSound clips
 - Use `audioSource.PlayOneShot(clip)` before animation triggers
 
-## Leveling System (Version 2.0)
+## Leveling System (Version 2.1 - Fast Progression)
 
 ### XP Progression
-- **XP Requirements**: Exponential scaling using `10 × level^1.5` formula
+- **XP Requirements**: Fast exponential scaling using `10 × level^1.2` formula (~50% faster than v2.0)
 - **XP Rewards**: Dynamic calculation based on level difference via `BattleSystem.CalculateXPReward()`
   - Fighting stronger enemies: 120-200%+ XP
   - Fighting same level: 100% XP
