@@ -46,4 +46,18 @@ public class Enemy : MonoBehaviour
         _enemyDir *= -1;
     }
     
+    // Public method to set enemy direction (for random spawning)
+    public void SetDirection(float direction)
+    {
+        _enemyDir = direction;
+        // Update sprite to match direction
+        transform.localScale = new Vector3(Mathf.Sign(_enemyDir), 1, 1);
+    }
+    
+    // Public method to flip the enemy's current direction
+    public void FlipDirection()
+    {
+        FlipSprite();
+    }
+    
 }
