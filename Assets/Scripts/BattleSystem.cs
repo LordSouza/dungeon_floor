@@ -105,6 +105,9 @@ public class BattleSystem : MonoBehaviour
             _playerUnit.GainXP(xpGanho);
             int newLevel = _playerUnit.unitLevel;
             
+            // Update player HUD with new stats
+            playerHUD.SetHUD(_playerUnit);
+            
             // Display XP gain message
             dialogueText.text = "Vitória! +" + xpGanho + " XP ganho";
             
