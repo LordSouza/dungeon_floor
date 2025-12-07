@@ -56,37 +56,29 @@ public class FishingBoat : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Mostrar informação visual no texto
-        if (promptText != null)
-        {
-            promptText.text = $"TRIGGER! Nome: {other.gameObject.name}\nTag: {other.tag}\n";
-        }
+        Debug.Log($">>> TRIGGER ENTER! GameObject: {other.gameObject.name} | Tag: '{other.tag}' | Layer: {other.gameObject.layer}");
         
         // Verificar se é o player
         if (other.CompareTag("Player"))
         {
+            Debug.Log("✓ Tag 'Player' detectada! Mostrando prompt...");
             playerInRange = true;
             ShowPrompt();
-            if (promptText != null)
-            {
-                promptText.text = promptMessage; // Mostrar mensagem correta
-            }
         }
         else
         {
-            // Mostrar erro visualmente
-            if (promptText != null)
-            {
-                promptText.text = $"❌ ERRO!\nTag: {other.tag}\nEsperado: Player";
-            }
+            Debug.LogError($"✗ Tag INCORRETA! Detectou: '{other.tag}' mas esperava: 'Player'");
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
+        Debug.Log($"<<< TRIGGER EXIT! GameObject: {other.gameObject.name}");
+        
         // Player saiu da área
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player saiu da área do barco");
             playerInRange = false;
             HidePrompt();
         }
@@ -94,22 +86,31 @@ public class FishingBoat : MonoBehaviour
 
     void ShowPrompt()
     {
+        Debug.Log("ShowPrompt() chamado");
         if (promptPanel != null)
         {
             promptPanel.SetActive(true);
+            Debug.Log("Prompt Panel ATIVADO");
+        }
+        else
+        {
+            Debug.LogWarning("ShowPrompt: Panel é NULL!");
         }
     }
 
     void HidePrompt()
     {
+        Debug.Log("HidePrompt() chamado");
         if (promptPanel != null)
         {
             promptPanel.SetActive(false);
+            Debug.Log("Prompt Panel DESATIVADO");
         }
     }
 
     void StartFishing()
     {
+        Debug.Log(">>> INICIANDO PESCA! <<<");
         isInteracting = true;
         HidePrompt();
         
@@ -117,11 +118,17 @@ public class FishingBoat : MonoBehaviour
         Player player = FindFirstObjectByType<Player>();
         if (player != null)
         {
+            Debug.Log($"Salvando posição do player: ({player.transform.position.x}, {player.transform.position.y})");
             GameManager.Instance.data.playerX = player.transform.position.x;
             GameManager.Instance.data.playerY = player.transform.position.y;
             GameManager.Instance.Save();
         }
+        else
+        {
+            Debug.LogWarning("Player não encontrado ao tentar salvar posição!");
+        }
         
+        Debug.Log($"Carregando cena: {fishingSceneName}");
         // Mudar para a cena de pesca
         SceneManager.LoadScene(fishingSceneName);
     }
