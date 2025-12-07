@@ -23,7 +23,7 @@ namespace Tests
         }
         
         [Test]
-        public void CalculateXPRequirement_Level5_Returns67()
+        public void CalculateXPRequirement_Level5_Returns69()
         {
             // Arrange
             GameObject go = new GameObject();
@@ -33,7 +33,7 @@ namespace Tests
             int xpRequired = unit.CalculateXPRequirement(5);
             
             // Assert
-            Assert.AreEqual(67, xpRequired, "Level 5->6 should require 67 XP (10 * 5^1.2)");
+            Assert.AreEqual(69, xpRequired, "Level 5->6 should require 69 XP (10 * 5^1.2)");
             
             // Cleanup
             Object.DestroyImmediate(go);
@@ -110,7 +110,7 @@ namespace Tests
             GameObject go = new GameObject();
             Unit unit = go.AddComponent<Unit>();
             unit.unitLevel = 4;
-            unit.xpToNextLevel = 52; // Level 4->5 requires 52 XP
+            unit.xpToNextLevel = 55; // Level 4->5 requires 55 XP (10 * 4^1.2)
             unit.MaxHp = 40;
             unit.currentHp = 40;
             unit.damage = 13;
@@ -119,7 +119,7 @@ namespace Tests
             int damageBefore = unit.damage;
             
             // Act
-            unit.GainXP(52);
+            unit.GainXP(55);
             
             // Assert
             Assert.AreEqual(5, unit.unitLevel, "Unit should be level 5");
