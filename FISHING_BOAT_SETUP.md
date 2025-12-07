@@ -17,7 +17,12 @@
    - Ajuste o **Size** para cobrir a área de interação (ex: X: 3, Y: 2)
    - Ajuste o **Offset** se necessário
 
-3. **Add Component → FishingBoat** (script criado)
+3. **Configurar Layer do Barco:**
+   - No topo do Inspector, encontre **Layer**
+   - Selecione **"Default"** ou crie uma layer específica "Interactable"
+   - ⚠️ **NÃO** use a layer do Player (evita conflitos)
+
+4. **Add Component → FishingBoat** (script criado)
 
 #### C. Configurar o Script FishingBoat
 No Inspector, com FishingBoat selecionado:
@@ -129,7 +134,70 @@ No Inspector, com FishingBoat selecionado:
 
 ---
 
-### 6. Testar no Unity
+### 6. Configurar Layers e Collision Matrix
+
+#### A. Verificar/Criar Layers Necessárias
+
+1. **Edit → Project Settings → Tags and Layers**
+2. **Verificar Layers existentes:**
+   - `Default` (Layer 0) - Objetos gerais
+   - `Player` (Layer 8 ou outra) - Player
+   - `Enemy` (Layer 9 ou outra) - Inimigos
+   - `Interactable` (opcional) - Objetos de interação
+
+3. **Criar Layer "Interactable" (opcional mas recomendado):**
+   - Encontre um slot vazio (ex: Layer 10)
+   - Digite **"Interactable"**
+   - Clique fora para salvar
+
+#### B. Atribuir Layers aos GameObjects
+
+1. **Player:**
+   - Selecione o GameObject Player
+   - Inspector → **Layer: Player**
+   - Se pedir para aplicar aos filhos, clique **"Yes, change children"**
+
+2. **FishingBoat:**
+   - Selecione o GameObject FishingBoat
+   - Inspector → **Layer: Interactable** (ou Default)
+
+3. **Enemies:**
+   - Verifique se estão na layer **Enemy**
+
+#### C. Configurar Collision Matrix
+
+⚠️ **IMPORTANTE:** Define quais layers colidem entre si
+
+1. **Edit → Project Settings → Physics 2D**
+2. **Scroll até "Layer Collision Matrix"** (no final)
+3. **Configurações Recomendadas:**
+
+```
+                Player  Enemy  Interactable
+Player            ✓       ✓         ✓
+Enemy             ✓       ✗         ✗
+Interactable      ✓       ✗         ✗
+```
+
+**Como configurar:**
+- ✅ **Player ↔ Player**: ATIVADO (auto-colisão player com chão, etc)
+- ✅ **Player ↔ Enemy**: ATIVADO (trigger de batalha)
+- ✅ **Player ↔ Interactable**: ATIVADO (trigger do barco) ⭐
+- ❌ **Enemy ↔ Interactable**: DESATIVADO (inimigos não pescam)
+- ❌ **Enemy ↔ Enemy**: DESATIVADO (inimigos não colidem entre si)
+
+#### D. Verificar Tags
+
+1. **GameObject Player:**
+   - Inspector → **Tag: Player** (usado no script FishingBoat)
+   - Se não existir, crie: Tags and Layers → Tags → Add "Player"
+
+2. **GameObject FishingBoat:**
+   - Tag pode ser "Untagged" (não precisa de tag específica)
+
+---
+
+### 7. Testar no Unity
 
 1. **Play no MapScene**
 2. **Mova o player até o barco**
@@ -187,10 +255,15 @@ Adicione um Animator ao PromptPanel com animação de fade in/out.
 ## ⚠️ Troubleshooting
 
 ### Prompt não aparece?
-- ✅ Verifique se Player tem **Tag "Player"**
+- ✅ Verifique se Player tem **Tag "Player"** (obrigatório!)
 - ✅ BoxCollider2D está marcado como **Is Trigger**
 - ✅ UI está linkada no Inspector
 - ✅ Panel não está sendo ocultado por outro objeto
+- ✅ **Layers**: Player e FishingBoat devem colidir na Physics 2D Matrix
+  - Edit → Project Settings → Physics 2D → Layer Collision Matrix
+  - Verifique se a interseção Player/Interactable está ✅
+- ✅ **Player tem Collider2D?** (precisa para detectar trigger)
+- ✅ Veja Console: deve aparecer "Player entrou na área do barco de pesca"
 
 ### Não muda de cena?
 - ✅ Cena está no **Build Settings**?
