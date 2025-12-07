@@ -41,6 +41,55 @@ public class ColliderDiagnostic : MonoBehaviour
             Debug.Log($"Rigidbody2D: {rb.bodyType}");
         }
         
+        // Verificar Player
+        Debug.Log("\n--- VERIFICANDO PLAYER ---");
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            Debug.Log($"Player encontrado: {player.gameObject.name}");
+            Debug.Log($"Player Layer: {LayerMask.LayerToName(player.gameObject.layer)} (index: {player.gameObject.layer})");
+            Debug.Log($"Player Tag: {player.gameObject.tag}");
+            Debug.Log($"Player Posição: {player.transform.position}");
+            
+            // Verificar colisores do player
+            Collider2D[] playerColliders = player.GetComponents<Collider2D>();
+            Debug.Log($"Player tem {playerColliders.Length} collider(s):");
+            foreach (var col in playerColliders)
+            {
+                Debug.Log($"  - {col.GetType().Name}: IsTrigger={col.isTrigger}, Enabled={col.enabled}");
+            }
+            
+            // Verificar Rigidbody2D do player
+            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+            if (playerRb != null)
+            {
+                Debug.Log($"Player Rigidbody2D: {playerRb.bodyType}");
+            }
+            else
+            {
+                Debug.LogError("✗ Player NÃO tem Rigidbody2D!");
+            }
+            
+            // Verificar se layers podem colidir
+            int boatLayer = gameObject.layer;
+            int playerLayer = player.gameObject.layer;
+            bool canCollide = !Physics2D.GetIgnoreLayerCollision(boatLayer, playerLayer);
+            
+            if (canCollide)
+            {
+                Debug.Log($"✓ Layers podem colidir: {LayerMask.LayerToName(boatLayer)} <-> {LayerMask.LayerToName(playerLayer)}");
+            }
+            else
+            {
+                Debug.LogError($"✗ PROBLEMA! Layers NÃO podem colidir: {LayerMask.LayerToName(boatLayer)} <-> {LayerMask.LayerToName(playerLayer)}");
+                Debug.LogError("Vá em Edit -> Project Settings -> Physics 2D -> Layer Collision Matrix e marque a interseção!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player não encontrado na cena!");
+        }
+        
         Debug.Log("=== FIM DO DIAGNÓSTICO ===\n");
     }
     
