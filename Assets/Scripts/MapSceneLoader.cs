@@ -10,11 +10,16 @@ public class MapSceneLoader : MonoBehaviour
         // Increment scene load counter for respawn system
         data.totalSceneLoads++;
         
+        Debug.Log($"=== MAP SCENE LOADED (Scene Load #{data.totalSceneLoads}) ===");
+        Debug.Log($"Respawn threshold: {data.respawnAfterSceneLoads} scene loads");
+        
         // Migrate old system to new system (one-time conversion)
         MigrateOldDeadEnemies(data);
         
         // Clean up respawned enemies from death records
         CleanupRespawnedEnemies(data);
+        
+        Debug.Log($"Active death records: {data.enemyDeathRecords.Count}");
         
         Player player = FindObjectOfType<Player>();
         
@@ -24,7 +29,9 @@ public class MapSceneLoader : MonoBehaviour
         }
         
         Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Debug.Log($"Total enemies in scene: {enemies.Length}");
 
+        int destroyedCount = 0;
         foreach (Enemy e in enemies)
         {
             if (!string.IsNullOrEmpty(e.enemyId))
@@ -32,10 +39,18 @@ public class MapSceneLoader : MonoBehaviour
                 // Check if enemy should still be dead
                 if (IsEnemyDead(e.enemyId, data))
                 {
+                    Debug.Log($"Destroying enemy: {e.enemyId} (still dead)");
                     Destroy(e.gameObject);
+                    destroyedCount++;
+                }
+                else
+                {
+                    Debug.Log($"Enemy {e.enemyId} is alive (respawned or never defeated)");
                 }
             }
         }
+        
+        Debug.Log($"Enemies destroyed: {destroyedCount}, Enemies alive: {enemies.Length - destroyedCount}");
         
         GameManager.Instance.Save();
     }
