@@ -13,8 +13,17 @@ public class Unit : MonoBehaviour
     public int currentXP;
     public int xpToNextLevel = 10;
 
+    // Base stat increases per level
     public int damagePerLevel = 2;
     public int hpPerLevel = 5;
+    
+    // Calculates XP required for a specific level using exponential curve
+    public int CalculateXPRequirement(int level)
+    {
+        // Formula: 10 * level^1.5 (rounded)
+        // Level 1->2: 10, Level 2->3: 28, Level 3->4: 52, Level 4->5: 80, etc.
+        return Mathf.RoundToInt(10f * Mathf.Pow(level, 1.5f));
+    }
     
     public void GainXP(int amount)
     {
@@ -31,12 +40,33 @@ public class Unit : MonoBehaviour
     {
         unitLevel++;
 
-        MaxHp += hpPerLevel;
-        damage += damagePerLevel;
+        // Calculate stat increases with slight scaling
+        int hpGain = hpPerLevel + (unitLevel / 5); // +1 HP every 5 levels
+        int damageGain = damagePerLevel + (unitLevel / 10); // +1 damage every 10 levels
 
+        MaxHp += hpGain;
+        damage += damageGain;
+
+        // Full heal on level up
         currentHp = MaxHp;
 
-        Debug.Log(unitName + " subiu para o nível " + unitLevel);
+        // Update XP requirement for next level
+        xpToNextLevel = CalculateXPRequirement(unitLevel);
+
+        // Milestone bonuses every 5 levels
+        if (unitLevel % 5 == 0)
+        {
+            int bonusHP = 10;
+            int bonusDamage = 3;
+            MaxHp += bonusHP;
+            damage += bonusDamage;
+            currentHp = MaxHp;
+            Debug.Log(unitName + " atingiu o nível marco " + unitLevel + "! Bônus: +" + bonusHP + " HP, +" + bonusDamage + " Dano");
+        }
+        else
+        {
+            Debug.Log(unitName + " subiu para o nível " + unitLevel + " (+" + hpGain + " HP, +" + damageGain + " Dano)");
+        }
     }
     
     public bool TakeDamage(int dmg)
