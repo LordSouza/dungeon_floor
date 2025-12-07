@@ -37,6 +37,11 @@ namespace Tests
             GameObject go = new GameObject();
             GameManager gm = go.AddComponent<GameManager>();
             
+            // Set _savePath using reflection to avoid null reference
+            var savePathField = typeof(GameManager).GetField("_savePath", 
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            savePathField.SetValue(gm, testSavePath);
+            
             // Act
             gm.ResetSave();
             
