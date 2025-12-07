@@ -105,8 +105,9 @@ public class BattleSystem : MonoBehaviour
             _playerUnit.GainXP(xpGanho);
             int newLevel = _playerUnit.unitLevel;
             
-            // Update player HUD with new stats
+            // Update player HUD with new stats (including XP bar)
             playerHUD.SetHUD(_playerUnit);
+            playerHUD.UpdateXP(_playerUnit);
             
             // Display XP gain message
             dialogueText.text = "Vitória! +" + xpGanho + " XP ganho";
@@ -126,6 +127,9 @@ public class BattleSystem : MonoBehaviour
             data.playerDamage = _playerUnit.damage;
             
             GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+            
+            // Salva a posição do jogador (já foi salva ao entrar na batalha, mantém essa posição)
+            // playerX e playerY já estão salvos no data e serão persistidos
             
             // Add enemy to death records (new respawn system)
             if (!string.IsNullOrEmpty(data.lastEnemyID))

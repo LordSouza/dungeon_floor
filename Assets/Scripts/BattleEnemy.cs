@@ -29,7 +29,6 @@ public class BattleEnemy : MonoBehaviour
         if (currentHP <= 0)
         {
             currentHP = 0;
-            Debug.Log("Inimigo derrotado!");
         }
     }
 }

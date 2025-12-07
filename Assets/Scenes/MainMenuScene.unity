@@ -165,7 +165,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 341247368}
-  - component: {fileID: 341247367}
   - component: {fileID: 341247369}
   m_Layer: 0
   m_Name: MenuManager
@@ -174,18 +173,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &341247367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341247366}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 144d853eb37d2ff45af71bd8236b5ac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &341247368
 Transform:
   m_ObjectHideFlags: 0
@@ -219,11 +206,18 @@ MonoBehaviour:
     lastEnemyID: 
     hasSpawnedOnce: 0
     deadEnemies: []
+    enemyDeathRecords: []
+    totalSceneLoads: 0
+    respawnAfterSceneLoads: 1
+    enemySpawnPoints: []
+    enableRandomSpawns: 1
     playerLevel: 1
     playerXP: 0
+    playerXPToNextLevel: 10
     playerMaxHP: 20
     playerDamage: 5
     playerCurrentHP: 20
+    fishCount: 0
     currentEnemyLevel: 1
 --- !u!1 &416391104
 GameObject:
@@ -1743,11 +1737,18 @@ MonoBehaviour:
     lastEnemyID: 
     hasSpawnedOnce: 0
     deadEnemies: []
+    enemyDeathRecords: []
+    totalSceneLoads: 0
+    respawnAfterSceneLoads: 1
+    enemySpawnPoints: []
+    enableRandomSpawns: 1
     playerLevel: 1
     playerXP: 0
+    playerXPToNextLevel: 10
     playerMaxHP: 20
     playerDamage: 5
     playerCurrentHP: 20
+    fishCount: 0
     currentEnemyLevel: 1
 --- !u!4 &1382590507
 Transform:
