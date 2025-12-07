@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -130,16 +131,28 @@ public class FishingMinigame : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         
-        if (fishingUI != null)
-            fishingUI.SetActive(false);
+        // Voltar para o MapScene
+        ReturnToMap();
+    }
+    
+    public void ReturnToMap()
+    {
+        // Restaurar posição do player antes de voltar
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            GameManager.Instance.data.playerX = player.transform.position.x;
+            GameManager.Instance.data.playerY = player.transform.position.y;
+            GameManager.Instance.Save();
+        }
         
-        isPlaying = false;
+        // Carregar MapScene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MapScene");
     }
     
     public void CancelFishing()
     {
         isPlaying = false;
-        if (fishingUI != null)
-            fishingUI.SetActive(false);
+        ReturnToMap();
     }
 }
