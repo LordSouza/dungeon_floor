@@ -11,14 +11,17 @@ public class FishingSceneController : MonoBehaviour
     
     void Start()
     {
+        Debug.Log("=== FishingSceneController Start() ===");
+        
         // Iniciar o minigame automaticamente
         if (fishingMinigame != null)
         {
+            Debug.Log($"Iniciando minigame em: {fishingMinigame.gameObject.name}");
             fishingMinigame.StartFishing();
         }
         else
         {
-            Debug.LogError("FishingMinigame não está atribuído no FishingSceneController!");
+            Debug.LogError("FishingMinigame não está atribuído no FishingSceneController! Arraste o componente no Inspector!");
         }
     }
 }
