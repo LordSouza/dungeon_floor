@@ -23,9 +23,11 @@ public class MapSceneLoader : MonoBehaviour
         
         Player player = FindObjectOfType<Player>();
         
-        if (player != null && (data.playerX != 0 || data.playerY != 0))
+        // Restaura a posição do jogador se já tiver spawned antes
+        if (player != null && data.hasSpawnedOnce)
         {
             player.transform.position = new Vector3(data.playerX, data.playerY, 0);
+            Debug.Log($"Player position restored to: ({data.playerX}, {data.playerY})");
         }
         
         Enemy[] enemies = FindObjectsOfType<Enemy>();
