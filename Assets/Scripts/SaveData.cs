@@ -56,7 +56,7 @@ public class SaveData
     // player stats
     public int playerLevel = 1;
     public int playerXP = 0;
-    public int playerXPToNextLevel = 10; // Track XP requirement
+    public int playerXPToNextLevel = 10; // Track XP requirement (10 * 1^1.2 = 10)
     public int playerMaxHP = 20;
     public int playerDamage = 5;
     public int playerCurrentHP = 20;
