@@ -61,6 +61,8 @@ public class SaveData
     public int playerDamage = 5;
     public int playerCurrentHP = 20;
 
+    // inventory
+    public int fishCount = 0; // Number of fish items
     
     // inimigo stats
     public int currentEnemyLevel = 1;
