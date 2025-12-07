@@ -32,7 +32,7 @@ public class SaveData
     // New respawn system
     public List<EnemyDeathRecord> enemyDeathRecords = new List<EnemyDeathRecord>();
     public int totalSceneLoads = 0; // Track scene loads for respawn timing
-    public int respawnAfterSceneLoads = 3; // Enemies respawn after X scene loads
+    public int respawnAfterSceneLoads = 1; // Enemies respawn after X scene loads
 
     // player stats
     public int playerLevel = 1;
