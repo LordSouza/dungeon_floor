@@ -114,16 +114,12 @@ public class FishingMinigame : MonoBehaviour
             
             if (resultText != null)
                 resultText.text = $"SUCCESS! You caught a fish! (Total: {GameManager.Instance.data.fishCount})";
-            
-            Debug.Log($"Fishing success! Player now has {GameManager.Instance.data.fishCount} fish");
         }
         else
         {
             // Failed
             if (resultText != null)
                 resultText.text = "The fish got away... Try again!";
-            
-            Debug.Log("Fishing failed!");
         }
         
         // Close UI after delay

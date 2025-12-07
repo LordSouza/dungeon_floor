@@ -62,11 +62,6 @@ public class Unit : MonoBehaviour
             MaxHp += bonusHP;
             damage += bonusDamage;
             currentHp = MaxHp;
-            Debug.Log(unitName + " atingiu o nível marco " + unitLevel + "! Bônus: +" + bonusHP + " HP, +" + bonusDamage + " Dano");
-        }
-        else
-        {
-            Debug.Log(unitName + " subiu para o nível " + unitLevel + " (+" + hpGain + " HP, +" + damageGain + " Dano)");
         }
     }
     

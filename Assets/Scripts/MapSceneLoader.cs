@@ -10,16 +10,11 @@ public class MapSceneLoader : MonoBehaviour
         // Increment scene load counter for respawn system
         data.totalSceneLoads++;
         
-        Debug.Log($"=== MAP SCENE LOADED (Scene Load #{data.totalSceneLoads}) ===");
-        Debug.Log($"Respawn threshold: {data.respawnAfterSceneLoads} scene loads");
-        
         // Migrate old system to new system (one-time conversion)
         MigrateOldDeadEnemies(data);
         
         // Clean up respawned enemies from death records
         CleanupRespawnedEnemies(data);
-        
-        Debug.Log($"Active death records: {data.enemyDeathRecords.Count}");
         
         Player player = FindFirstObjectByType<Player>();
         
@@ -27,11 +22,9 @@ public class MapSceneLoader : MonoBehaviour
         if (player != null && data.hasSpawnedOnce)
         {
             player.transform.position = new Vector3(data.playerX, data.playerY, 0);
-            Debug.Log($"Player position restored to: ({data.playerX}, {data.playerY})");
         }
         
         Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-        Debug.Log($"Total enemies in scene: {enemies.Length}");
         
         // Store original spawn positions if not already stored
         InitializeSpawnPoints(data, enemies);
@@ -44,7 +37,6 @@ public class MapSceneLoader : MonoBehaviour
                 // Check if enemy should still be dead
                 if (IsEnemyDead(e.enemyId, data))
                 {
-                    Debug.Log($"Destroying enemy: {e.enemyId} (still dead)");
                     Destroy(e.gameObject);
                     destroyedCount++;
                 }
@@ -52,12 +44,9 @@ public class MapSceneLoader : MonoBehaviour
                 {
                     // Enemy is alive - apply random spawn if respawned
                     ApplyRandomSpawnIfNeeded(e, data);
-                    Debug.Log($"Enemy {e.enemyId} is alive at position ({e.transform.position.x}, {e.transform.position.y})");
                 }
             }
         }
-        
-        Debug.Log($"Enemies destroyed: {destroyedCount}, Enemies alive: {enemies.Length - destroyedCount}");
         
         GameManager.Instance.Save();
     }
@@ -67,14 +56,12 @@ public class MapSceneLoader : MonoBehaviour
         // Collect all original enemy positions as valid spawn points
         if (data.enemySpawnPoints.Count == 0 && enemies.Length > 0)
         {
-            Debug.Log("Initializing spawn points...");
             foreach (Enemy e in enemies)
             {
                 if (!string.IsNullOrEmpty(e.enemyId))
                 {
                     var spawnPoint = new EnemySpawnPoint(e.transform.position.x, e.transform.position.y);
                     data.enemySpawnPoints.Add(spawnPoint);
-                    Debug.Log($"Added spawn point: ({spawnPoint.x}, {spawnPoint.y})");
                 }
             }
         }
@@ -95,11 +82,6 @@ public class MapSceneLoader : MonoBehaviour
         if (shouldFlip)
         {
             //enemy.FlipDirection();
-            Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y}) - Direction FLIPPED");
-        }
-        else
-        {
-            Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y}) - Original direction");
         }
     }
     

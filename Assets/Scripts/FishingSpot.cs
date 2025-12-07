@@ -40,7 +40,6 @@ public class FishingSpot : MonoBehaviour
                 promptText.gameObject.SetActive(true);
                 promptText.text = $"Press {interactKey} to Fish";
             }
-            Debug.Log("Player entered fishing spot");
         }
     }
     
@@ -53,7 +52,6 @@ public class FishingSpot : MonoBehaviour
             {
                 promptText.gameObject.SetActive(false);
             }
-            Debug.Log("Player left fishing spot");
         }
     }
     
@@ -62,11 +60,6 @@ public class FishingSpot : MonoBehaviour
         if (fishingMinigame != null)
         {
             fishingMinigame.StartFishing();
-            Debug.Log("Started fishing minigame!");
-        }
-        else
-        {
-            Debug.LogError("FishingMinigame not found!");
         }
     }
 }
