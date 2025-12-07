@@ -283,7 +283,13 @@ Adicione um Animator ao PromptPanel com animação de fade in/out.
 - [ ] UI de Prompt criada e linkada
 - [ ] FishingScene existe e está no Build Settings
 - [ ] Player tem tag "Player"
-- [ ] Testado no Play Mode
+- [ ] **Layers configuradas:**
+  - [ ] Player na layer "Player"
+  - [ ] FishingBoat na layer "Interactable" ou "Default"
+- [ ] **Collision Matrix:**
+  - [ ] Player ↔ Interactable está ATIVADO
+- [ ] Player tem Collider2D (BoxCollider2D, CapsuleCollider2D, etc)
+- [ ] Testado no Play Mode com Console aberto
 
 ---
 
