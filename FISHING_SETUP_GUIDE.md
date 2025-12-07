@@ -114,6 +114,8 @@ All code is complete. Now you need to set up the UI and scene objects in Unity.
 - **Success Zone**: Drag SuccessZone (the green image)
 - **Instruction Text**: Drag InstructionText
 - **Result Text**: Drag ResultText
+- **Fish Count Text**: Drag FishCountText (new!)
+- **Exit Button**: Drag ExitButton (new!)
 
 **Configure Settings:**
 - **Indicator Speed**: 2 (adjust for difficulty)
