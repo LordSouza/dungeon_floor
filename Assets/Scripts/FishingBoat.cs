@@ -61,6 +61,14 @@ public class FishingBoat : MonoBehaviour
 
     void Update()
     {
+        // Debug: Mostrar distância até o player
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+            Debug.Log($"Distância até Player: {distance:F2} | Player em Range: {playerInRange}");
+        }
+        
         // Verificar input apenas se o player está perto e não está interagindo
         if (playerInRange && !isInteracting && Input.GetKeyDown(KeyCode.F))
         {
@@ -145,23 +153,6 @@ public class FishingBoat : MonoBehaviour
         Debug.Log($"Carregando cena: {fishingSceneName}");
         // Mudar para a cena de pesca
         SceneManager.LoadScene(fishingSceneName);
-    }
-
-    void Update()
-    {
-        // Debug: Mostrar distância até o player
-        Player player = FindFirstObjectByType<Player>();
-        if (player != null)
-        {
-            float distance = Vector2.Distance(transform.position, player.transform.position);
-            Debug.Log($"Distância até Player: {distance:F2} | Player em Range: {playerInRange}");
-        }
-        
-        // Detectar input F quando player está na área
-        if (playerInRange && !isInteracting && Input.GetKeyDown(KeyCode.F))
-        {
-            StartFishing();
-        }
     }
 
     void OnDrawGizmosSelected()
