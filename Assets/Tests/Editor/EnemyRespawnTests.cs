@@ -28,14 +28,7 @@ public class EnemyRespawnTests
         data.totalSceneLoads = 5;
         
         string enemyId = "skeleton_1";
-        var deathRecord = new EnemyDeathRecord
-        {
-            enemyId = enemyId,
-            deathCount = 1,
-            sceneLoadsAtDeath = data.totalSceneLoads,
-            originalX = 10.0f,
-            originalY = 2.0f
-        };
+        var deathRecord = new EnemyDeathRecord(enemyId, data.totalSceneLoads, 10.0f, 2.0f);
         
         data.enemyDeathRecords.Add(deathRecord);
         
@@ -157,14 +150,7 @@ public class EnemyRespawnTests
             bool alreadyMigrated = data.enemyDeathRecords.Any(r => r.enemyId == enemyId);
             if (!alreadyMigrated)
             {
-                var record = new EnemyDeathRecord
-                {
-                    enemyId = enemyId,
-                    deathCount = 1,
-                    sceneLoadsAtDeath = 0,
-                    originalX = 0,
-                    originalY = 0
-                };
+                var record = new EnemyDeathRecord(enemyId, 0, 0, 0);
                 data.enemyDeathRecords.Add(record);
             }
         }
@@ -182,14 +168,7 @@ public class EnemyRespawnTests
         data.respawnAfterSceneLoads = 1;
         
         // Add old death record that should be cleaned up
-        data.enemyDeathRecords.Add(new EnemyDeathRecord
-        {
-            enemyId = "old_enemy",
-            deathCount = 1,
-            sceneLoadsAtDeath = 5, // 5 loads ago
-            originalX = 0,
-            originalY = 0
-        });
+        data.enemyDeathRecords.Add(new EnemyDeathRecord("old_enemy", 5, 0, 0));
         
         // Simulate cleanup
         data.enemyDeathRecords.RemoveAll(record =>
@@ -208,14 +187,7 @@ public class EnemyRespawnTests
         string enemyId = "skeleton_boss";
         
         // First death
-        var record = new EnemyDeathRecord
-        {
-            enemyId = enemyId,
-            deathCount = 1,
-            sceneLoadsAtDeath = 5,
-            originalX = 0,
-            originalY = 0
-        };
+        var record = new EnemyDeathRecord(enemyId, 5, 0, 0);
         data.enemyDeathRecords.Add(record);
         
         // Second death (after respawn)

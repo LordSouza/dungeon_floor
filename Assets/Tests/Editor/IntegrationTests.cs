@@ -94,14 +94,7 @@ public class IntegrationTests
         data.totalSceneLoads = 1;
         string enemyId = "skeleton_1";
         
-        var deathRecord = new EnemyDeathRecord
-        {
-            enemyId = enemyId,
-            deathCount = 1,
-            sceneLoadsAtDeath = data.totalSceneLoads,
-            originalX = 10,
-            originalY = 2
-        };
+        var deathRecord = new EnemyDeathRecord(enemyId, data.totalSceneLoads, 10, 2);
         data.enemyDeathRecords.Add(deathRecord);
         
         // Scene 2: Enemy still dead
