@@ -334,6 +334,24 @@ public class BattleSystem : MonoBehaviour
         // Minimum XP reward
         return Mathf.Max(finalXP, 1);
     }
+    
+    void RecordEnemyDeath(SaveData data, string enemyId)
+    {
+        // Find existing record or create new one
+        var existingRecord = data.enemyDeathRecords.Find(r => r.enemyId == enemyId);
+        
+        if (existingRecord != null)
+        {
+            // Enemy defeated again - update death time and increment counter
+            existingRecord.deathCount++;
+            existingRecord.sceneLoadsAtDeath = data.totalSceneLoads;
+        }
+        else
+        {
+            // First time defeating this enemy
+            data.enemyDeathRecords.Add(new EnemyDeathRecord(enemyId, data.totalSceneLoads));
+        }
+    }
 
 }
 
