@@ -82,6 +82,26 @@ All code is complete. Now you need to set up the UI and scene objects in Unity.
 6. Color: Yellow (#FFEB3B)
 7. Alignment: Center
 
+### Step 6.5: Create Fish Counter Text
+
+1. **Right-click FishingPanel** → UI → Text - TextMeshPro
+2. Rename to "**FishCountText**"
+3. Position: Top-right corner
+4. Text: "Fish: 0"
+5. Font Size: 20
+6. Color: White
+7. Alignment: Right
+
+### Step 6.6: Create Exit Button
+
+1. **Right-click FishingPanel** → UI → Button - TextMeshPro
+2. Rename to "**ExitButton**"
+3. Position: Bottom-right corner
+4. Button text: "Exit (ESC)"
+5. Font Size: 18
+6. Color: Red or gray
+7. Size: 120x40
+
 ### Step 7: Attach FishingMinigame Script
 
 1. **Right-click in Hierarchy** → Create Empty
