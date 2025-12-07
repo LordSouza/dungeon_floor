@@ -99,6 +99,13 @@ public class BattleSystem : MonoBehaviour
         {
             state = BattleState.WON;
             enemyAnimator.SetTrigger("morre");
+            
+            if (_enemyUnit.unitLevel == 15)
+            {
+                yield return new WaitForSeconds(1f);
+                SceneManager.LoadScene("VictoryScene");
+                yield break; 
+            }
             EndBattle();
             
             // Improved XP calculation based on level difference
@@ -230,6 +237,7 @@ public class BattleSystem : MonoBehaviour
             GameManager.Instance.data.justReturnedFromBattle = true;
             
             GameManager.Instance.MarkEnemyAsDead(GameManager.Instance.data.lastEnemyID);
+            
             SceneManager.LoadScene("MapScene");
         } else if (state == BattleState.LOST)
         {

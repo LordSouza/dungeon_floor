@@ -26,4 +26,9 @@ public class MainUIController : MonoBehaviour
         GameManager.Instance.ResetSave();
         GameManager.Instance.Save();
     }
+    
+    public void GotoMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 }

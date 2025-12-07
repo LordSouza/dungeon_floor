@@ -51,7 +51,7 @@ public class SaveData
     // New respawn system
     public List<EnemyDeathRecord> enemyDeathRecords = new List<EnemyDeathRecord>();
     public int totalSceneLoads = 0; // Track scene loads for respawn timing
-    public int respawnAfterSceneLoads = 1; // Enemies respawn after X scene loads
+    public int respawnAfterSceneLoads = 2; // Enemies respawn after X scene loads
     public List<EnemySpawnPoint> enemySpawnPoints = new List<EnemySpawnPoint>(); // Valid spawn positions
     public bool enableRandomSpawns = true; // Toggle random spawning
     
