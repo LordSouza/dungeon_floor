@@ -167,10 +167,18 @@ MonoBehaviour:
     lastEnemyID: 
     hasSpawnedOnce: 0
     deadEnemies: []
+    enemyDeathRecords: []
+    totalSceneLoads: 0
+    respawnAfterSceneLoads: 3
+    enemySpawnPoints: []
+    enableRandomSpawns: 1
     playerLevel: 1
     playerXP: 0
+    playerXPToNextLevel: 10
     playerMaxHP: 20
     playerDamage: 5
+    playerCurrentHP: 20
+    fishCount: 0
     currentEnemyLevel: 1
 --- !u!4 &1032757214
 Transform:
