@@ -47,6 +47,13 @@ public class FishingBoat : MonoBehaviour
 
     void Update()
     {
+        // TESTE: Mostrar sempre no texto se está detectando
+        if (promptText != null)
+        {
+            float distance = Vector3.Distance(transform.position, FindFirstObjectByType<Player>()?.transform.position ?? Vector3.zero);
+            promptText.text = $"Distância: {distance:F2}m\nRange: {playerInRange}\nTag detectada: {(FindFirstObjectByType<Player>()?.tag ?? "null")}";
+        }
+        
         // Verificar input apenas se o player está perto e não está interagindo
         if (playerInRange && !isInteracting && Input.GetKeyDown(KeyCode.F))
         {
