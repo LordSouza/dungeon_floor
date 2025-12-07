@@ -47,13 +47,6 @@ public class FishingBoat : MonoBehaviour
 
     void Update()
     {
-        // TESTE: Mostrar sempre no texto se está detectando
-        if (promptText != null)
-        {
-            float distance = Vector3.Distance(transform.position, FindFirstObjectByType<Player>()?.transform.position ?? Vector3.zero);
-            promptText.text = $"Distância: {distance:F2}m\nRange: {playerInRange}\nTag detectada: {(FindFirstObjectByType<Player>()?.tag ?? "null")}";
-        }
-        
         // Verificar input apenas se o player está perto e não está interagindo
         if (playerInRange && !isInteracting && Input.GetKeyDown(KeyCode.F))
         {
@@ -63,19 +56,29 @@ public class FishingBoat : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // LOG DETALHADO - sempre mostra o que colidiu
-        Debug.LogWarning($"FishingBoat: Algo colidiu! Nome: '{other.gameObject.name}' | Tag: '{other.tag}' | Layer: {LayerMask.LayerToName(other.gameObject.layer)}");
+        // Mostrar informação visual no texto
+        if (promptText != null)
+        {
+            promptText.text = $"TRIGGER! Nome: {other.gameObject.name}\nTag: {other.tag}\n";
+        }
         
         // Verificar se é o player
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
             ShowPrompt();
-            Debug.Log("Player entrou na área do barco de pesca");
+            if (promptText != null)
+            {
+                promptText.text = promptMessage; // Mostrar mensagem correta
+            }
         }
         else
         {
-            Debug.LogError($"FishingBoat: Colidiu mas NÃO é Player! Tag detectada: '{other.tag}' (esperado: 'Player')");
+            // Mostrar erro visualmente
+            if (promptText != null)
+            {
+                promptText.text = $"❌ ERRO!\nTag: {other.tag}\nEsperado: Player";
+            }
         }
     }
 
@@ -86,7 +89,6 @@ public class FishingBoat : MonoBehaviour
         {
             playerInRange = false;
             HidePrompt();
-            Debug.Log("Player saiu da área do barco de pesca");
         }
     }
 
@@ -95,15 +97,6 @@ public class FishingBoat : MonoBehaviour
         if (promptPanel != null)
         {
             promptPanel.SetActive(true);
-            if (showDebugMessages)
-            {
-                Debug.Log("FishingBoat: Prompt mostrado (UI Panel)");
-            }
-        }
-        else if (useConsolePrompt)
-        {
-            // Fallback: mostrar no Console se UI não configurada
-            Debug.Log($"<color=cyan>★ {promptMessage} ★</color>");
         }
     }
 
@@ -112,10 +105,6 @@ public class FishingBoat : MonoBehaviour
         if (promptPanel != null)
         {
             promptPanel.SetActive(false);
-            if (showDebugMessages)
-            {
-                Debug.Log("FishingBoat: Prompt escondido");
-            }
         }
     }
 
@@ -123,8 +112,6 @@ public class FishingBoat : MonoBehaviour
     {
         isInteracting = true;
         HidePrompt();
-        
-        Debug.Log("Iniciando pesca - mudando para " + fishingSceneName);
         
         // Salvar a posição atual do jogador antes de mudar de cena
         Player player = FindFirstObjectByType<Player>();
