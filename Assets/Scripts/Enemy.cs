@@ -24,19 +24,11 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Foreground"))    
             FlipSprite();
-<<<<<<< HEAD
-=======
-        // Não destruir ao colidir com Player - a batalha é iniciada pelo Player.cs
->>>>>>> b6199364f7b3d5aae19a8e84c9a2c8dba3f670c5
     }
 
     public void KillEnemy()
     {
         GameObject poof = Instantiate(enemyPoof, transform.position, Quaternion.identity);
-<<<<<<< HEAD
-=======
-        // Garantir que o efeito seja destruído mesmo se a cena mudar
->>>>>>> b6199364f7b3d5aae19a8e84c9a2c8dba3f670c5
         Destroy(poof, 0.8f);
         Destroy(gameObject);
     }
@@ -49,22 +41,10 @@ public class Enemy : MonoBehaviour
     
     void OnCollisionEnter2D(Collision2D other)
     {
-        Enemy e = other.gameObject.GetComponent<Enemy>();
-        
-        if (other.gameObject.CompareTag("Player"))
+        // Colisão entre inimigos para evitar overlap
+        if (other.gameObject.GetComponent<Enemy>() != null)
         {
-            Debug.Log($"[Enemy] Player colidiu com: {enemyId}, prefabID = {enemyPrefabID}");
-
-            GameManager.Instance.data.enemyPrefabToSpawn = enemyPrefabID;
-
-            GameManager.Instance.data.playerX = transform.position.x;
-            GameManager.Instance.data.playerY = transform.position.y;
-
-            GameManager.Instance.data.lastEnemyID = enemyId;
-            GameManager.Instance.data.currentEnemyLevel = enemyLevel;
-
-            GameManager.Instance.Save();
-            SceneManager.LoadScene("GameScene");
+            FlipSprite();
         }
     }
     
