@@ -44,12 +44,25 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SetupBattle()
     {
+        // instanciar o jogador
         GameObject playerGo = Instantiate(playerPrefab, playerBattleStation);
         _playerUnit = playerGo.GetComponent<Unit>();
         playerAnimator = playerGo.GetComponentInChildren<Animator>();
+        _playerUnit.unitLevel = GameManager.Instance.data.playerLevel;
+        _playerUnit.currentXP = GameManager.Instance.data.playerXP;
+        _playerUnit.xpToNextLevel = GameManager.Instance.data.playerXPToNextLevel;
 
+        _playerUnit.MaxHp = GameManager.Instance.data.playerMaxHP;
+        _playerUnit.currentHp = GameManager.Instance.data.playerCurrentHP;
+
+        _playerUnit.damage = GameManager.Instance.data.playerDamage;
+        
+        
+        // instanciar o mob
         GameObject enemyGo = Instantiate(enemyPrefab, enemyBattleStation);
         _enemyUnit = enemyGo.GetComponent<Unit>();
+        _enemyUnit.InitializeEnemy(GameManager.Instance.data.currentEnemyLevel);
+        
         enemyAnimator = enemyGo.GetComponentInChildren<Animator>();
 
         dialogueText.text = "Voce encontrou um " + _enemyUnit.unitName + ", mate-o."; 
@@ -84,10 +97,45 @@ public class BattleSystem : MonoBehaviour
             enemyAnimator.SetTrigger("morre");
             EndBattle();
             
-            GameData data = GameData.Load();
-            data.defeatedEnemies.Add(data.currentEnemyId);
-            data.currentEnemyId = null;
-            data.Save();
+            // Improved XP calculation based on level difference
+            int xpGanho = CalculateXPReward(_playerUnit.unitLevel, _enemyUnit.unitLevel);
+            
+            // Store levels before XP gain to detect level up
+            int oldLevel = _playerUnit.unitLevel;
+            _playerUnit.GainXP(xpGanho);
+            int newLevel = _playerUnit.unitLevel;
+            
+            // Update player HUD with new stats
+            playerHUD.SetHUD(_playerUnit);
+            
+            // Display XP gain message
+            dialogueText.text = "Vitória! +" + xpGanho + " XP ganho";
+            
+            // If leveled up, show special message
+            if (newLevel > oldLevel)
+            {
+                dialogueText.text += "\n★ LEVEL UP! " + oldLevel + " → " + newLevel + " ★";
+            }
+            
+            // Salvar os dados
+            SaveData data = GameManager.Instance.data;
+            data.playerLevel = _playerUnit.unitLevel;
+            data.playerXP = _playerUnit.currentXP;
+            data.playerXPToNextLevel = _playerUnit.xpToNextLevel;
+            data.playerMaxHP = _playerUnit.MaxHp;
+            data.playerDamage = _playerUnit.damage;
+            
+            GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+            
+            // Add enemy to death records (new respawn system)
+            if (!string.IsNullOrEmpty(data.lastEnemyID))
+            {
+                RecordEnemyDeath(data, data.lastEnemyID);
+                data.lastEnemyID = null;
+            }
+            
+            GameManager.Instance.Save();
+            
             
             yield return new WaitForSeconds(1f);
             SceneManager.LoadScene("MapScene");
@@ -107,8 +155,8 @@ public class BattleSystem : MonoBehaviour
 
         float rnd = Random.value; 
 
-        float chanceHeal = 0.25f;  
-        float chanceBuff = 0.15f;  
+        float chanceHeal = 0.10f;  
+        float chanceBuff = 0.05f;  
 
         bool didAction = false;
         
@@ -148,7 +196,9 @@ public class BattleSystem : MonoBehaviour
 
             bool isDead = _playerUnit.TakeDamage(_enemyUnit.damage);
             playerHUD.setHP(_playerUnit.currentHp);
-
+            GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+            GameManager.Instance.Save();
+            
             yield return new WaitForSeconds(1f);
 
             if (isDead)
@@ -172,6 +222,8 @@ public class BattleSystem : MonoBehaviour
             SceneManager.LoadScene("MapScene");
         } else if (state == BattleState.LOST)
         {
+            GameManager.Instance.data.playerCurrentHP = GameManager.Instance.data.playerMaxHP;
+            GameManager.Instance.Save();
             dialogueText.text = "Voce foi derrotado!";
         }
     }
@@ -194,7 +246,10 @@ public class BattleSystem : MonoBehaviour
 
         playerHUD.setHP(_playerUnit.currentHp);
         dialogueText.text = "Você recuperou vida!";
-
+        
+        GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
+        GameManager.Instance.Save();
+        
         yield return new WaitForSeconds(1f);
 
         state = BattleState.ENEMYTURN;
@@ -238,10 +293,100 @@ public class BattleSystem : MonoBehaviour
         }
     }
     
-    public void QteFailed()
+    public void OnUseItemButton()
     {
-        dialogueText.text = "Falhou no evento";
+        if (state != BattleState.PLAYERTURN)
+            return;
+        
+        // Check if player has fish
+        if (GameManager.Instance.data.fishCount <= 0)
+        {
+            dialogueText.text = "Você não tem nenhum peixe!";
+            return;
+        }
+        
+        playerButtonsPanel.SetActive(false);
+        StartCoroutine(UseItem());
+    }
+    
+    IEnumerator UseItem()
+    {
+        // Use fish item
+        int healAmount = 12; // Fish heals 12 HP
+        _playerUnit.Heal(healAmount);
+        
+        // Decrement fish count
+        GameManager.Instance.data.fishCount--;
+        GameManager.Instance.Save();
+        
+        dialogueText.text = $"Você usou um peixe! Recuperou {healAmount} HP! (Restam: {GameManager.Instance.data.fishCount})";
+        
+        playerHUD.setHP(_playerUnit.currentHp);
+        
+        yield return new WaitForSeconds(1.5f);
+        
+        state = BattleState.ENEMYTURN;
         StartCoroutine(EnemyTurn());
+    }
+    
+    // Calculate XP reward based on level difference for more interesting progression
+    int CalculateXPReward(int playerLevel, int enemyLevel)
+    {
+        // Base XP scales with enemy level
+        int baseXP = enemyLevel * 5;
+        
+        // Level difference multiplier
+        int levelDiff = enemyLevel - playerLevel;
+        float multiplier = 1.0f;
+        
+        if (levelDiff >= 3)
+        {
+            // Fighting much stronger enemies gives bonus XP
+            multiplier = 1.5f + (levelDiff * 0.1f);
+        }
+        else if (levelDiff >= 1)
+        {
+            // Fighting slightly stronger enemies gives small bonus
+            multiplier = 1.2f + (levelDiff * 0.1f);
+        }
+        else if (levelDiff == 0)
+        {
+            // Same level = normal XP
+            multiplier = 1.0f;
+        }
+        else if (levelDiff >= -2)
+        {
+            // Fighting slightly weaker enemies gives reduced XP
+            multiplier = 0.8f + (levelDiff * 0.1f);
+        }
+        else
+        {
+            // Fighting much weaker enemies gives minimal XP
+            multiplier = 0.5f;
+        }
+        
+        int finalXP = Mathf.RoundToInt(baseXP * multiplier);
+        
+        // Minimum XP reward
+        return Mathf.Max(finalXP, 1);
+    }
+    
+    void RecordEnemyDeath(SaveData data, string enemyId)
+    {
+        // Find existing record or create new one
+        var existingRecord = data.enemyDeathRecords.Find(r => r.enemyId == enemyId);
+        
+        if (existingRecord != null)
+        {
+            // Enemy defeated again - update death time and increment counter
+            existingRecord.deathCount++;
+            existingRecord.sceneLoadsAtDeath = data.totalSceneLoads;
+        }
+        else
+        {
+            // First time defeating this enemy
+            data.enemyDeathRecords.Add(new EnemyDeathRecord(enemyId, data.totalSceneLoads));
+        }
     }
 
 }

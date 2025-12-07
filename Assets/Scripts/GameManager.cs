@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         
         _savePath = Application.persistentDataPath + "/save.json";
+        
+        ResetSave();
         Load();
     }
 
@@ -44,5 +46,12 @@ public class GameManager : MonoBehaviour
 
         Save();
     }
+    
+    public void ResetSave()
+    {
+        data = new SaveData();
+
+    }
+
 
 }
