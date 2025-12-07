@@ -96,9 +96,22 @@ public class BattleSystem : MonoBehaviour
             enemyAnimator.SetTrigger("morre");
             EndBattle();
             
-            // xp para o player
-            int xpGanho = _enemyUnit.unitLevel * 5; 
+            // Improved XP calculation based on level difference
+            int xpGanho = CalculateXPReward(_playerUnit.unitLevel, _enemyUnit.unitLevel);
+            
+            // Store levels before XP gain to detect level up
+            int oldLevel = _playerUnit.unitLevel;
             _playerUnit.GainXP(xpGanho);
+            int newLevel = _playerUnit.unitLevel;
+            
+            // Display XP gain message
+            dialogueText.text = "Vitória! +" + xpGanho + " XP ganho";
+            
+            // If leveled up, show special message
+            if (newLevel > oldLevel)
+            {
+                dialogueText.text += "\n★ LEVEL UP! " + oldLevel + " → " + newLevel + " ★";
+            }
             
             // Salvar os dados
             SaveData data = GameManager.Instance.data;
