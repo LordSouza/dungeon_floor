@@ -30,7 +30,7 @@ public class MapSceneLoader : MonoBehaviour
             Debug.Log($"Player position restored to: ({data.playerX}, {data.playerY})");
         }
         
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         Debug.Log($"Total enemies in scene: {enemies.Length}");
         
         // Store original spawn positions if not already stored
