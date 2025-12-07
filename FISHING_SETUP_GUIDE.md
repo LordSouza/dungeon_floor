@@ -1,3 +1,6 @@
+
+
+
 # Fishing Minigame - Complete Setup Guide
 
 ## ✅ Scripts Created!
