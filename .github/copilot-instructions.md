@@ -21,8 +21,15 @@ A Unity 2D side-scrolling dungeon crawler with turn-based combat, level progress
 
 ### Scene Transitions & State Handoff
 1. **Map → Battle**: Player.cs detects collision with Enemy → saves player position and enemy data → loads GameScene
-2. **Battle → Map**: BattleSystem.cs marks enemy as dead → saves player stats → loads MapScene
-3. **MapSceneLoader.cs** restores player position and removes dead enemies on Map scene load
+2. **Battle → Map**: BattleSystem.cs records enemy death → saves player stats → loads MapScene
+3. **MapSceneLoader.cs** restores player position, increments scene load counter, and manages enemy respawns
+
+### Enemy Respawn System
+- Enemies respawn after `respawnAfterSceneLoads` (default: 3) scene transitions
+- **EnemyDeathRecord**: Tracks `enemyId`, `deathCount`, and `sceneLoadsAtDeath`
+- **MapSceneLoader.cs**: Increments `totalSceneLoads`, cleans up expired death records, determines which enemies should be alive
+- **BattleSystem.cs**: Calls `RecordEnemyDeath()` to add/update death records
+- Old `deadEnemies` list automatically migrated to new respawn system
 
 ## Combat System
 
@@ -70,10 +77,10 @@ Uses **BattleState enum**: `START → PLAYERTURN → ENEMYTURN → (WON|LOST)`
 ## Development Workflows
 
 ### Adding New Enemy Types
-1. Set unique `enemyId` string on Enemy.cs component (for persistence)
+1. Set unique `enemyId` string on Enemy.cs component (for persistence and respawn tracking)
 2. Set `enemyLevel` int (scales stats via Unit.ScaleByLevel)
 3. Ensure Rigidbody2D + trigger colliders configured
-4. Dead enemies tracked in `SaveData.deadEnemies` list
+4. Enemy deaths tracked in `SaveData.enemyDeathRecords` with respawn system
 
 ### Modifying Combat Mechanics
 - Player stats in SaveData.cs (base values: level=1, XP=0, maxHP=20, damage=5)
