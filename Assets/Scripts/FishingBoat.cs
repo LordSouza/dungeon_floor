@@ -147,6 +147,23 @@ public class FishingBoat : MonoBehaviour
         SceneManager.LoadScene(fishingSceneName);
     }
 
+    void Update()
+    {
+        // Debug: Mostrar distância até o player
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+            Debug.Log($"Distância até Player: {distance:F2} | Player em Range: {playerInRange}");
+        }
+        
+        // Detectar input F quando player está na área
+        if (playerInRange && !isInteracting && Input.GetKeyDown(KeyCode.F))
+        {
+            StartFishing();
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         // Visualizar a área de interação no editor
@@ -155,6 +172,22 @@ public class FishingBoat : MonoBehaviour
         if (boxCollider != null)
         {
             Gizmos.DrawWireCube(transform.position + (Vector3)boxCollider.offset, boxCollider.size);
+        }
+    }
+    
+    void OnDrawGizmos()
+    {
+        // Sempre mostrar a área do trigger (não precisa selecionar)
+        Gizmos.color = new Color(0, 1, 1, 0.3f); // Cyan transparente
+        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+        if (boxCollider != null)
+        {
+            Vector3 center = transform.position + (Vector3)boxCollider.offset;
+            Gizmos.DrawCube(center, boxCollider.size);
+            
+            // Desenhar borda
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(center, boxCollider.size);
         }
     }
 }
