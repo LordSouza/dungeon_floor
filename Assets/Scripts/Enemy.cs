@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         _enemyPlayerRb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.data.deadEnemies.Contains(enemyId))
-            Destroy(gameObject);
+        // Note: Enemy cleanup now handled by MapSceneLoader for respawn system
+        // Old deadEnemies check removed to support respawning
     }
 
     void FixedUpdate()
