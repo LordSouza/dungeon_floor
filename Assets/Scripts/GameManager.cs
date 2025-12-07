@@ -37,6 +37,13 @@ public class GameManager : MonoBehaviour
             return;
         string json = File.ReadAllText(_savePath);
         data = JsonUtility.FromJson<SaveData>(json);
+        
+        // Recalculate XP requirement if it's invalid (for old saves or corrupted data)
+        if (data.playerXPToNextLevel <= 0)
+        {
+            data.playerXPToNextLevel = CalculateXPRequirement(data.playerLevel);
+            Save();
+        }
     }
 
     public void MarkEnemyAsDead(string enemyID)
@@ -50,7 +57,15 @@ public class GameManager : MonoBehaviour
     public void ResetSave()
     {
         data = new SaveData();
-
+        // Calculate correct XP requirement for starting level
+        data.playerXPToNextLevel = CalculateXPRequirement(data.playerLevel);
+        Save();
+    }
+    
+    // Helper method to calculate XP requirement (matches Unit.cs formula)
+    private int CalculateXPRequirement(int level)
+    {
+        return Mathf.RoundToInt(10f * Mathf.Pow(level, 1.2f));
     }
 
 
