@@ -208,8 +208,11 @@ public void UpdateFishCount()
 4. **Press E** → Fishing UI appears
 5. **Watch indicator** move across bar
 6. **Press SPACE or E** when indicator is in green zone
-7. **Success**: "SUCCESS! You caught a fish! (Total: 1)"
-8. **UI closes** after 2 seconds
+7. **Success**: "SUCCESS! You caught a fish!"
+8. **Counter updates**: "Fish: 1" (top-right)
+9. **After 2 seconds** → Minigame **restarts automatically**
+10. **Fish again** as many times as you want!
+11. **Press ESC or click Exit** when done → Returns to MapScene
 
 ### Test Battle Item Usage:
 
