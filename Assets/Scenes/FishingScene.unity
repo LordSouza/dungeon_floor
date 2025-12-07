@@ -933,7 +933,7 @@ MonoBehaviour:
   resultText: {fileID: 296668843}
   indicatorSpeed: 2
   successZoneSize: 0.2
-  fishHealAmount: 12
+  fishHealAmount: 16
 --- !u!4 &1653092198
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,8 +1481,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 560077570}
+  - {fileID: 1653092198}
   - {fileID: 162369205}
   - {fileID: 2121000586}
   - {fileID: 1930478859}
   - {fileID: 40302064}
-  - {fileID: 1653092198}
