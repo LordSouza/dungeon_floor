@@ -8024,8 +8024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f5839489aaa0e4d8f3d756ad7bf676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptPanel: {fileID: 0}
-  promptText: {fileID: 0}
+  promptPanel: {fileID: 1517063594}
+  promptText: {fileID: 1064156886}
   promptMessage: Pressione F para pescar
   fishingSceneName: FishingScene
 --- !u!224 &604334846
