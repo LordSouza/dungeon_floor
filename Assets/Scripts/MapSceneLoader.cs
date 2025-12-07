@@ -21,7 +21,7 @@ public class MapSceneLoader : MonoBehaviour
         
         Debug.Log($"Active death records: {data.enemyDeathRecords.Count}");
         
-        Player player = FindObjectOfType<Player>();
+        Player player = FindFirstObjectByType<Player>();
         
         // Restaura a posição do jogador se já tiver spawned antes
         if (player != null && data.hasSpawnedOnce)
