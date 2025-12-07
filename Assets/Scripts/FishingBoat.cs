@@ -56,12 +56,19 @@ public class FishingBoat : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // LOG DETALHADO - sempre mostra o que colidiu
+        Debug.LogWarning($"FishingBoat: Algo colidiu! Nome: '{other.gameObject.name}' | Tag: '{other.tag}' | Layer: {LayerMask.LayerToName(other.gameObject.layer)}");
+        
         // Verificar se é o player
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
             ShowPrompt();
             Debug.Log("Player entrou na área do barco de pesca");
+        }
+        else
+        {
+            Debug.LogError($"FishingBoat: Colidiu mas NÃO é Player! Tag detectada: '{other.tag}' (esperado: 'Player')");
         }
     }
 
