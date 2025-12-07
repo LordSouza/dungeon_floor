@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class FishingMinigame : MonoBehaviour
     public RectTransform successZone;
     public TextMeshProUGUI instructionText;
     public TextMeshProUGUI resultText;
+    public TextMeshProUGUI fishCountText; // Contador de peixes
+    public Button exitButton; // Botão para sair
     
     [Header("Settings")]
     public float indicatorSpeed = 2f;
@@ -27,7 +30,16 @@ public class FishingMinigame : MonoBehaviour
     void Start()
     {
         if (fishingUI != null)
+        {
             fishingUI.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("fishingUI é NULL! Configure no Inspector!");
+        }
+        
+        if (progressSlider == null)
+            Debug.LogError("progressSlider é NULL! Configure no Inspector!");
     }
     
     void Update()
@@ -65,6 +77,12 @@ public class FishingMinigame : MonoBehaviour
         {
             AttemptCatch();
         }
+        
+        // Listen for exit (ESC key)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CancelFishing();
+        }
     }
     
     public void StartFishing()
@@ -72,11 +90,25 @@ public class FishingMinigame : MonoBehaviour
         if (isPlaying)
             return;
         
+        if (fishingUI == null || progressSlider == null)
+        {
+            Debug.LogError("FishingMinigame: Referências não configuradas no Inspector!");
+            return;
+        }
+        
+        // Setup exit button
+        if (exitButton != null)
+        {
+            exitButton.onClick.RemoveAllListeners();
+            exitButton.onClick.AddListener(CancelFishing);
+        }
+        
+        UpdateFishCountDisplay();
+        
         // Setup success zone (random position)
         successZoneStart = Random.Range(0.1f, 0.9f - successZoneSize);
         successZoneEnd = successZoneStart + successZoneSize;
         
-        // Position success zone visual
         if (successZone != null)
         {
             successZone.anchorMin = new Vector2(successZoneStart, 0);
@@ -89,8 +121,7 @@ public class FishingMinigame : MonoBehaviour
         isPlaying = true;
         
         // Show UI
-        if (fishingUI != null)
-            fishingUI.SetActive(true);
+        fishingUI.SetActive(true);
         
         if (instructionText != null)
             instructionText.text = "Press SPACE or E when indicator is in GREEN zone!";
@@ -113,7 +144,9 @@ public class FishingMinigame : MonoBehaviour
             GameManager.Instance.Save();
             
             if (resultText != null)
-                resultText.text = $"SUCCESS! You caught a fish! (Total: {GameManager.Instance.data.fishCount})";
+                resultText.text = $"SUCCESS! You caught a fish!";
+            
+            UpdateFishCountDisplay();
         }
         else
         {
@@ -122,24 +155,60 @@ public class FishingMinigame : MonoBehaviour
                 resultText.text = "The fish got away... Try again!";
         }
         
-        // Close UI after delay
-        StartCoroutine(CloseAfterDelay(2f));
+        // Reiniciar após delay (não fechar mais)
+        StartCoroutine(RestartFishingAfterDelay(2f));
     }
     
-    IEnumerator CloseAfterDelay(float delay)
+    IEnumerator RestartFishingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         
-        if (fishingUI != null)
-            fishingUI.SetActive(false);
+        // Limpar texto de resultado
+        if (resultText != null)
+            resultText.text = "";
         
-        isPlaying = false;
+        // Reposicionar success zone aleatoriamente
+        successZoneStart = Random.Range(0.1f, 0.9f - successZoneSize);
+        successZoneEnd = successZoneStart + successZoneSize;
+        
+        if (successZone != null)
+        {
+            successZone.anchorMin = new Vector2(successZoneStart, 0);
+            successZone.anchorMax = new Vector2(successZoneEnd, 1);
+        }
+        
+        // Reset state
+        currentProgress = 0f;
+        movingRight = true;
+        isPlaying = true;
+    }
+    
+    public void ReturnToMap()
+    {
+        // Restaurar posição do player antes de voltar
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            GameManager.Instance.data.playerX = player.transform.position.x;
+            GameManager.Instance.data.playerY = player.transform.position.y;
+            GameManager.Instance.Save();
+        }
+        
+        // Carregar MapScene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MapScene");
     }
     
     public void CancelFishing()
     {
         isPlaying = false;
-        if (fishingUI != null)
-            fishingUI.SetActive(false);
+        ReturnToMap();
+    }
+    
+    void UpdateFishCountDisplay()
+    {
+        if (fishCountText != null)
+        {
+            fishCountText.text = $"Fish: {GameManager.Instance.data.fishCount}";
+        }
     }
 }

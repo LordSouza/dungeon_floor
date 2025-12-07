@@ -18,10 +18,42 @@ public class Player : MonoBehaviour
     [SerializeField] float speedX;
     [SerializeField] float jumpIntensity;
     
+    // Battle immunity system
+    private bool _isBattleImmune = false;
+    [SerializeField] private float battleImmunityDuration = 2f; // 2 seconds of immunity
+    
     void Awake()
     {
         _playerRb = GetComponent<Rigidbody2D>();
         _playerSpriteAnimator = GetComponentInChildren<Animator>();
+    }
+    
+    void Start()
+    {
+        // Check if player just returned from battle
+        if (GameManager.Instance.data.justReturnedFromBattle)
+        {
+            StartBattleImmunity();
+            GameManager.Instance.data.justReturnedFromBattle = false;
+            GameManager.Instance.Save();
+        }
+    }
+    
+    void StartBattleImmunity()
+    {
+        _isBattleImmune = true;
+        Invoke(nameof(EndBattleImmunity), battleImmunityDuration);
+    }
+    
+    void EndBattleImmunity()
+    {
+        _isBattleImmune = false;
+    }
+    
+    void OnDestroy()
+    {
+        // Cancelar Invoke pendente ao destruir
+        CancelInvoke(nameof(EndBattleImmunity));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,7 +67,6 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue inputValue)
     {
-
         if (_isGrounded)
         {
             _playerRb.linearVelocityY = jumpIntensity;
@@ -43,23 +74,18 @@ public class Player : MonoBehaviour
             _playerSpriteAnimator.SetBool("IsJumping", !_isGrounded);
             _canDoubleJump = true;
         }
-
-        if (_canDoubleJump)
+        else if (_canDoubleJump)
         {
             _playerRb.linearVelocityY = jumpIntensity;
             _canDoubleJump = false;
             _playerSpriteAnimator.SetTrigger("DoubleJump");
         }
-        
     }
-    
-    
     
     void OnMove(InputValue inputValue)
     {
         _xDir = inputValue.Get<Vector2>().x;
     }
-    
     
     void MovePlayer()
     {
@@ -83,24 +109,21 @@ public class Player : MonoBehaviour
         MovePlayer();
         _playerSpriteAnimator.SetFloat("xVelocity", Math.Abs(_playerRb.linearVelocity.x));
         _playerSpriteAnimator.SetFloat("yVelocity", _playerRb.linearVelocity.y);
-        
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
         Enemy e = other.gameObject.GetComponent<Enemy>();
 
-        if (e != null)
+        if (e != null && !_isBattleImmune)
         {
             GameManager.Instance.data.playerX = transform.position.x;
             GameManager.Instance.data.playerY = transform.position.y;
-            
             GameManager.Instance.data.lastEnemyID = e.enemyId;
             GameManager.Instance.data.currentEnemyLevel = e.enemyLevel;
-            
-
+            GameManager.Instance.data.enemyPrefabToSpawn = e.enemyPrefabID;
             GameManager.Instance.Save();
-
+            
             SceneManager.LoadScene("GameScene");
         }
     }
