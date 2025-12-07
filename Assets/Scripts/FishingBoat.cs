@@ -80,16 +80,32 @@ public class FishingBoat : MonoBehaviour
     {
         Debug.Log($">>> TRIGGER ENTER! GameObject: {other.gameObject.name} | Tag: '{other.tag}' | Layer: {other.gameObject.layer}");
         
-        // Verificar se é o player
-        if (other.CompareTag("Player"))
+        // Verificar se é o player (diretamente ou através do parent)
+        bool isPlayer = other.CompareTag("Player");
+        
+        // Se não for, verificar se o parent é o Player
+        if (!isPlayer && other.transform.parent != null)
         {
-            Debug.Log("✓ Tag 'Player' detectada! Mostrando prompt...");
+            isPlayer = other.transform.parent.CompareTag("Player");
+        }
+        
+        // Garantir que NÃO é um inimigo
+        bool isEnemy = other.GetComponent<Enemy>() != null || 
+                       (other.transform.parent != null && other.transform.parent.GetComponent<Enemy>() != null);
+        
+        if (isPlayer && !isEnemy)
+        {
+            Debug.Log("✓ Player detectado! Mostrando prompt...");
             playerInRange = true;
             ShowPrompt();
         }
+        else if (isEnemy)
+        {
+            Debug.Log($"⚠ Inimigo detectado, ignorando: {other.gameObject.name}");
+        }
         else
         {
-            Debug.LogError($"✗ Tag INCORRETA! Detectou: '{other.tag}' mas esperava: 'Player'");
+            Debug.LogWarning($"⚠ Objeto não identificado: '{other.gameObject.name}' | Tag: '{other.tag}'");
         }
     }
 
