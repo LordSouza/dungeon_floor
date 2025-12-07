@@ -30,6 +30,9 @@ public class MapSceneLoader : MonoBehaviour
         
         Enemy[] enemies = FindObjectsOfType<Enemy>();
         Debug.Log($"Total enemies in scene: {enemies.Length}");
+        
+        // Store original spawn positions if not already stored
+        InitializeSpawnPoints(data, enemies);
 
         int destroyedCount = 0;
         foreach (Enemy e in enemies)
@@ -45,7 +48,9 @@ public class MapSceneLoader : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"Enemy {e.enemyId} is alive (respawned or never defeated)");
+                    // Enemy is alive - apply random spawn if respawned
+                    ApplyRandomSpawnIfNeeded(e, data);
+                    Debug.Log($"Enemy {e.enemyId} is alive at position ({e.transform.position.x}, {e.transform.position.y})");
                 }
             }
         }
@@ -53,6 +58,42 @@ public class MapSceneLoader : MonoBehaviour
         Debug.Log($"Enemies destroyed: {destroyedCount}, Enemies alive: {enemies.Length - destroyedCount}");
         
         GameManager.Instance.Save();
+    }
+    
+    void InitializeSpawnPoints(SaveData data, Enemy[] enemies)
+    {
+        // Collect all original enemy positions as valid spawn points
+        if (data.enemySpawnPoints.Count == 0 && enemies.Length > 0)
+        {
+            Debug.Log("Initializing spawn points...");
+            foreach (Enemy e in enemies)
+            {
+                if (!string.IsNullOrEmpty(e.enemyId))
+                {
+                    var spawnPoint = new EnemySpawnPoint(e.transform.position.x, e.transform.position.y);
+                    data.enemySpawnPoints.Add(spawnPoint);
+                    Debug.Log($"Added spawn point: ({spawnPoint.x}, {spawnPoint.y})");
+                }
+            }
+        }
+    }
+    
+    void ApplyRandomSpawnIfNeeded(Enemy enemy, SaveData data)
+    {
+        // Only apply random spawn if enabled and there are spawn points
+        if (!data.enableRandomSpawns || data.enemySpawnPoints.Count == 0)
+            return;
+        
+        // Check if this enemy was previously defeated (respawning)
+        var wasDefeated = data.enemyDeathRecords.Any(r => r.enemyId == enemy.enemyId && r.deathCount > 0);
+        
+        if (wasDefeated)
+        {
+            // Enemy respawned - move to random spawn point
+            var randomSpawn = data.enemySpawnPoints[Random.Range(0, data.enemySpawnPoints.Count)];
+            enemy.transform.position = new Vector3(randomSpawn.x, randomSpawn.y, enemy.transform.position.z);
+            Debug.Log($"Respawned {enemy.enemyId} at random position: ({randomSpawn.x}, {randomSpawn.y})");
+        }
     }
     
     void MigrateOldDeadEnemies(SaveData data)
