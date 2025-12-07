@@ -21,11 +21,25 @@ public class FishingBoat : MonoBehaviour
 
     void Start()
     {
-
+        Debug.Log("=== FISHING BOAT START ===");
+        
         // Verificar se UI está configurada
         if (promptPanel == null && showDebugMessages)
         {
             Debug.LogWarning("FishingBoat: Prompt Panel não configurado! Configure no Inspector ou ative 'Use Console Prompt'", this);
+        }
+        else if (promptPanel != null)
+        {
+            Debug.Log("Prompt Panel configurado corretamente!");
+        }
+        
+        if (promptText != null)
+        {
+            Debug.Log("Prompt Text configurado corretamente!");
+        }
+        else if (showDebugMessages)
+        {
+            Debug.LogWarning("Prompt Text NÃO configurado!");
         }
         
         if (promptText == null && showDebugMessages)
