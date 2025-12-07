@@ -84,6 +84,19 @@ Uses **BattleState enum**: `START → PLAYERTURN → ENEMYTURN → (WON|LOST)`
 - BattleSystem.cs manages AudioSource with playerAttackSound, playerHealSound, enemyAttackSound clips
 - Use `audioSource.PlayOneShot(clip)` before animation triggers
 
+## Planned Features & Extensions
+
+### Leveling System Improvements
+- Current system: Linear XP gain (`enemyLevel × 5`), fixed stat increases per level
+- Future enhancements should consider: skill trees, stat allocation choices, or level-gated abilities
+
+### Fishing Minigame & Inventory
+- **Fishing Minigame**: Will be a separate scene or UI overlay minigame
+- **Fish Item**: Consumable item obtainable from fishing, usable in battle for healing
+- **Inventory System**: Need to add inventory data structure to SaveData.cs
+- **Battle Integration**: Add item usage button/mechanic in BattleSystem.cs alongside Attack/Heal
+- Consider: Item slots in BattleHUD, inventory UI in MapScene
+
 ## Critical Implementation Notes
 
 - **Never** modify GameManager.Instance.data without calling .Save() immediately after
@@ -92,3 +105,4 @@ Uses **BattleState enum**: `START → PLAYERTURN → ENEMYTURN → (WON|LOST)`
 - Enemy destruction in MapScene handled by MapSceneLoader on scene load, not on kill
 - Player position persists across scene transitions via SaveData (playerX, playerY)
 - All file paths in Unity use forward slashes: `Assets/Scripts/`, not backslashes
+- When adding new features (fishing, inventory), follow the existing save/load pattern in GameManager
