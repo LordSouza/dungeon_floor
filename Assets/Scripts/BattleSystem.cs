@@ -128,6 +128,9 @@ public class BattleSystem : MonoBehaviour
             
             GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
             
+            // Salva a posição do jogador (já foi salva ao entrar na batalha, mantém essa posição)
+            // playerX e playerY já estão salvos no data e serão persistidos
+            
             // Add enemy to death records (new respawn system)
             if (!string.IsNullOrEmpty(data.lastEnemyID))
             {
