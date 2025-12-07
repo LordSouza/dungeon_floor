@@ -112,7 +112,7 @@ public class FishingBoat : MonoBehaviour
         Debug.Log("Iniciando pesca - mudando para " + fishingSceneName);
         
         // Salvar a posição atual do jogador antes de mudar de cena
-        Player player = FindObjectOfType<Player>();
+        Player player = FindFirstObjectByType<Player>();
         if (player != null)
         {
             GameManager.Instance.data.playerX = player.transform.position.x;

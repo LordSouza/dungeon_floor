@@ -13,7 +13,9 @@ public class FishingSpot : MonoBehaviour
     {
         if (fishingMinigame == null)
         {
-            fishingMinigame = FindObjectOfType<FishingMinigame>();
+            void Start()
+    {
+        fishingMinigame = FindFirstObjectByType<FishingMinigame>();
         }
         
         if (promptText != null)
