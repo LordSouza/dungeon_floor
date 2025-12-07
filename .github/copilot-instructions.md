@@ -84,11 +84,33 @@ Uses **BattleState enum**: `START → PLAYERTURN → ENEMYTURN → (WON|LOST)`
 - BattleSystem.cs manages AudioSource with playerAttackSound, playerHealSound, enemyAttackSound clips
 - Use `audioSource.PlayOneShot(clip)` before animation triggers
 
+## Leveling System (Version 2.0)
+
+### XP Progression
+- **XP Requirements**: Exponential scaling using `10 × level^1.5` formula
+- **XP Rewards**: Dynamic calculation based on level difference via `BattleSystem.CalculateXPReward()`
+  - Fighting stronger enemies: 120-200%+ XP
+  - Fighting same level: 100% XP
+  - Fighting weaker enemies: 50-90% XP (prevents grinding)
+
+### Stat Progression
+- **Base Growth**: +5 HP, +2 damage per level
+- **Scaling Bonus**: +1 HP every 5 levels, +1 damage every 10 levels
+- **Milestone Rewards**: Every 5 levels, gain +10 HP and +3 damage bonus
+- **Full Heal**: Player restored to max HP on level up
+
+### Persistence
+- Track `playerXPToNextLevel` in SaveData.cs
+- Calculate XP requirement using `Unit.CalculateXPRequirement(level)`
+- Always save after XP gain and level up
+
 ## Planned Features & Extensions
 
-### Leveling System Improvements
-- Current system: Linear XP gain (`enemyLevel × 5`), fixed stat increases per level
-- Future enhancements should consider: skill trees, stat allocation choices, or level-gated abilities
+### Future Leveling Enhancements
+- Skill trees and stat allocation choices
+- Level-gated abilities or special moves
+- Prestige system for end-game progression
+- XP multiplier items or temporary boosts
 
 ### Fishing Minigame & Inventory
 - **Fishing Minigame**: Will be a separate scene or UI overlay minigame
