@@ -113,6 +113,11 @@ namespace Tests
             GameManager gm = go.AddComponent<GameManager>();
             gm.data = new SaveData();
             
+            // Set _savePath using reflection to avoid null reference
+            var savePathField = typeof(GameManager).GetField("_savePath", 
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            savePathField.SetValue(gm, testSavePath);
+            
             // Act
             gm.MarkEnemyAsDead("enemy_1");
             gm.MarkEnemyAsDead("enemy_1"); // Try to add duplicate
