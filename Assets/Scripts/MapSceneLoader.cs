@@ -87,7 +87,18 @@ public class MapSceneLoader : MonoBehaviour
         // ALWAYS randomize position - every map load!
         var randomSpawn = data.enemySpawnPoints[Random.Range(0, data.enemySpawnPoints.Count)];
         enemy.transform.position = new Vector3(randomSpawn.x, randomSpawn.y, enemy.transform.position.z);
-        Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y})");
+        
+        // Randomly flip direction (50% chance)
+        bool shouldFlip = Random.value > 0.5f;
+        if (shouldFlip)
+        {
+            enemy.FlipDirection();
+            Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y}) - Direction FLIPPED");
+        }
+        else
+        {
+            Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y}) - Original direction");
+        }
     }
     
     void MigrateOldDeadEnemies(SaveData data)
