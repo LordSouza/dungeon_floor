@@ -20,9 +20,10 @@ public class Unit : MonoBehaviour
     // Calculates XP required for a specific level using exponential curve
     public int CalculateXPRequirement(int level)
     {
-        // Formula: 10 * level^1.5 (rounded)
-        // Level 1->2: 10, Level 2->3: 28, Level 3->4: 52, Level 4->5: 80, etc.
-        return Mathf.RoundToInt(10f * Mathf.Pow(level, 1.5f));
+        // Faster progression formula: 10 * level^1.2 (reduced from 1.5)
+        // Level 1->2: 10, Level 2->3: 23, Level 3->4: 36, Level 4->5: 52, etc.
+        // Much faster than before - about 30% less XP needed per level!
+        return Mathf.RoundToInt(10f * Mathf.Pow(level, 1.2f));
     }
     
     public void GainXP(int amount)
