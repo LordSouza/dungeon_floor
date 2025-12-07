@@ -12,11 +12,26 @@ public class FishingBoat : MonoBehaviour
     [Header("Scene Settings")]
     [SerializeField] private string fishingSceneName = "FishingScene";
     
+    [Header("Debug")]
+    [SerializeField] private bool showDebugMessages = true;
+    [SerializeField] private bool useConsolePrompt = true; // Usar Console se UI não configurada
+    
     private bool playerInRange = false;
     private bool isInteracting = false;
 
     void Start()
     {
+        // Verificar se UI está configurada
+        if (promptPanel == null && showDebugMessages)
+        {
+            Debug.LogWarning("FishingBoat: Prompt Panel não configurado! Configure no Inspector ou ative 'Use Console Prompt'", this);
+        }
+        
+        if (promptText == null && showDebugMessages)
+        {
+            Debug.LogWarning("FishingBoat: Prompt Text não configurado!", this);
+        }
+        
         // Esconder o prompt no início
         if (promptPanel != null)
         {
@@ -65,6 +80,15 @@ public class FishingBoat : MonoBehaviour
         if (promptPanel != null)
         {
             promptPanel.SetActive(true);
+            if (showDebugMessages)
+            {
+                Debug.Log("FishingBoat: Prompt mostrado (UI Panel)");
+            }
+        }
+        else if (useConsolePrompt)
+        {
+            // Fallback: mostrar no Console se UI não configurada
+            Debug.Log($"<color=cyan>★ {promptMessage} ★</color>");
         }
     }
 
@@ -73,6 +97,10 @@ public class FishingBoat : MonoBehaviour
         if (promptPanel != null)
         {
             promptPanel.SetActive(false);
+            if (showDebugMessages)
+            {
+                Debug.Log("FishingBoat: Prompt escondido");
+            }
         }
     }
 
