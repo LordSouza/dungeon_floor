@@ -24,11 +24,12 @@ A Unity 2D side-scrolling dungeon crawler with turn-based combat, level progress
 2. **Battle → Map**: BattleSystem.cs records enemy death → saves player stats → loads MapScene
 3. **MapSceneLoader.cs** restores player position, increments scene load counter, and manages enemy respawns
 
-### Enemy Respawn System
-- Enemies respawn after `respawnAfterSceneLoads` (default: 3) scene transitions
-- **EnemyDeathRecord**: Tracks `enemyId`, `deathCount`, and `sceneLoadsAtDeath`
-- **MapSceneLoader.cs**: Increments `totalSceneLoads`, cleans up expired death records, determines which enemies should be alive
-- **BattleSystem.cs**: Calls `RecordEnemyDeath()` to add/update death records
+### Enemy Respawn System (With Random Positions)
+- Enemies respawn after `respawnAfterSceneLoads` (default: 1) scene transitions
+- **Random Spawning**: Enemies respawn at random positions from spawn point pool (toggleable via `enableRandomSpawns`)
+- **EnemyDeathRecord**: Tracks `enemyId`, `deathCount`, `sceneLoadsAtDeath`, and original position
+- **MapSceneLoader.cs**: Increments `totalSceneLoads`, initializes spawn points pool, applies random positions to respawned enemies
+- **Spawn Points**: Collected from all original enemy positions on first map load
 - Old `deadEnemies` list automatically migrated to new respawn system
 
 ## Combat System
