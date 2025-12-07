@@ -8,12 +8,29 @@ public class EnemyDeathRecord
     public string enemyId;
     public int deathCount; // How many times defeated
     public int sceneLoadsAtDeath; // Scene loads when enemy died
+    public float originalX; // Store original spawn position
+    public float originalY;
     
-    public EnemyDeathRecord(string id, int sceneLoads)
+    public EnemyDeathRecord(string id, int sceneLoads, float x = 0, float y = 0)
     {
         enemyId = id;
         deathCount = 1;
         sceneLoadsAtDeath = sceneLoads;
+        originalX = x;
+        originalY = y;
+    }
+}
+
+[Serializable]
+public class EnemySpawnPoint
+{
+    public float x;
+    public float y;
+    
+    public EnemySpawnPoint(float posX, float posY)
+    {
+        x = posX;
+        y = posY;
     }
 }
 
