@@ -7,8 +7,8 @@ public class BattleHUD : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI levelText;
     public Slider healthSlider;
-    public Slider xpSlider; // Optional XP bar for player HUD
-    public TextMeshProUGUI xpText; // Optional XP text for player HUD
+    public Slider xpSlider; 
+    public TextMeshProUGUI xpText; 
 
     public void SetHUD(Unit unit)
     {
@@ -17,7 +17,7 @@ public class BattleHUD : MonoBehaviour
         healthSlider.maxValue = unit.MaxHp;
         healthSlider.value = unit.currentHp;
         
-        // Update XP display if components exist (player only)
+        
         UpdateXP(unit);
     }
 
@@ -28,7 +28,6 @@ public class BattleHUD : MonoBehaviour
     
     public void UpdateXP(Unit unit)
     {
-        // Only update if XP UI elements exist (for player HUD)
         if (xpSlider != null)
         {
             xpSlider.maxValue = unit.xpToNextLevel;

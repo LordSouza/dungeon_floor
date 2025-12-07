@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
 
@@ -12,7 +13,8 @@ public class BattleSystem : MonoBehaviour
 
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
-
+    [SerializeField] List<GameObject> enemyPrefabs;
+    
     public Animator playerAnimator;
     public Animator enemyAnimator;
     
@@ -38,6 +40,8 @@ public class BattleSystem : MonoBehaviour
     public int extraHealingFromQte;
     void Start()
     {
+        GameManager.Instance.Load();
+        SpawnEnemy();
         state = BattleState.START;
         StartCoroutine(SetupBattle());
     }
@@ -393,6 +397,19 @@ public class BattleSystem : MonoBehaviour
             data.enemyDeathRecords.Add(new EnemyDeathRecord(enemyId, data.totalSceneLoads));
         }
     }
+    void SpawnEnemy()
+    {
+        int id = GameManager.Instance.data.enemyPrefabToSpawn;
+        Debug.Log("[BattleSystem] enemyPrefabToSpawn = " + id);
+        
+        if (enemyPrefabs == null || enemyPrefabs.Count == 0)
+        {
+            Debug.LogError("[BattleSystem] enemyPrefabs está vazio!");
+            return;
+        }
 
+        enemyPrefab = enemyPrefabs[id]; // Define qual prefab será instanciado depois
+    }
 }
+
 

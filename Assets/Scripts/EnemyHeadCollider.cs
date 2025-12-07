@@ -9,14 +9,14 @@ public class EnemyHeadCollider : MonoBehaviour
         // Verificar se é o Player diretamente
         if (other.CompareTag("Player"))
         {
-            GetComponentInParent<Enemy>()?.Destroy();
+            GetComponentInParent<Enemy>()?.KillEnemy();
             return;
         }
         
         // Verificar se o pai é o Player (para objetos filhos)
         if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
         {
-            GetComponentInParent<Enemy>()?.Destroy();
+            GetComponentInParent<Enemy>()?.KillEnemy();
         }
     }
 }

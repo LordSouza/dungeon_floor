@@ -8029,8 +8029,6 @@ MonoBehaviour:
   promptText: {fileID: 1064156886}
   promptMessage: Pressione F para pescar
   fishingSceneName: FishingScene
-  showDebugMessages: 1
-  useConsolePrompt: 1
 --- !u!224 &604334846
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8446,12 +8444,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1543385925}
-  - {fileID: 531292940}
-  - {fileID: 1029412362}
   - {fileID: 1847845153}
-  - {fileID: 724306795}
+  - {fileID: 1029412362}
+  - {fileID: 531292940}
+  - {fileID: 1543385925}
   - {fileID: 2086389237}
+  - {fileID: 724306795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &941552981
@@ -8467,8 +8465,16 @@ PrefabInstance:
       value: e4
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPrefabID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
@@ -8557,8 +8563,16 @@ PrefabInstance:
       value: e6
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPrefabID
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
@@ -8708,8 +8722,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feetCollider: {fileID: 2050011553}
-  speedX: 7
-  jumpIntensity: 35
+  speedX: 8
+  jumpIntensity: 40
 --- !u!114 &1055059567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8976,8 +8990,16 @@ PrefabInstance:
       value: e5
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPrefabID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer
@@ -9142,7 +9164,15 @@ PrefabInstance:
       value: e1
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPrefabID
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
@@ -9716,6 +9746,10 @@ PrefabInstance:
       value: e2
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
       value: 2
       objectReference: {fileID: 0}
@@ -9830,8 +9864,16 @@ PrefabInstance:
       value: e3
       objectReference: {fileID: 0}
     - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPoof
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: enemyLevel
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763416023851289093, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
+      propertyPath: enemyPrefabID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264181066281930703, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
       propertyPath: m_Layer

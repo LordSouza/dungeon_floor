@@ -6,14 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="ac50339d-f553-4f05-8a92-79f66414f87f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.dungeon_floor/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.dungeon_floor/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Backgound/cavern/bg_13.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Backgound/cavern/bg_13.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/GandalfHardcore FREE Platformer Assets/BG Dirt2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/GandalfHardcore FREE Platformer Assets/BG Dirt2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Mobs/Golem_1/Blue/No_Swoosh_VFX/Golem_1_idle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Mobs/Golem_1/Blue/No_Swoosh_VFX/Golem_1_idle.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/Mobs/Skeleton_Sword/Skeleton_White/Skeleton_With_VFX/Skeleton_01_White_Die.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/Mobs/Skeleton_Sword/Skeleton_White/Skeleton_With_VFX/Skeleton_01_White_Die.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Assets/oak_woods_v1.0/oak_woods_tileset.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Assets/oak_woods_v1.0/oak_woods_tileset.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Mobs.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Mobs.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Mobs.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Mobs.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MapScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MapScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BattleHUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BattleHUD.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BattleSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BattleSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyHeadCollider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyHeadCollider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/New Tile Palette.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/New Tile Palette.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/IconBitOne SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/IconBitOne SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +35,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BattleEnemy.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BattleHUD.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Boot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@27299721f2fd/Runtime/UGUI/EventSystem/EventInterfaces.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -148,6 +159,9 @@
       <workItem from="1765102166354" duration="783000" />
       <workItem from="1765103365580" duration="2223000" />
       <workItem from="1765105809345" duration="1624000" />
+      <workItem from="1765127676126" duration="2864000" />
+      <workItem from="1765132485101" duration="118000" />
+      <workItem from="1765132625962" duration="4169000" />
     </task>
     <servers />
   </component>

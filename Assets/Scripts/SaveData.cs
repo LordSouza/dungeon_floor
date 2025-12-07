@@ -42,6 +42,8 @@ public class SaveData
 
     public string lastEnemyID;
     public bool hasSpawnedOnce;
+    
+    public int enemyPrefabToSpawn;
 
     // Old system - kept for backward compatibility but will migrate to new system
     public List<string> deadEnemies = new List<string>();

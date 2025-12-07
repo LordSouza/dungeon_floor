@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public SaveData data = new SaveData();
     string _savePath;
-
+    
     private void Awake()
     {
         
