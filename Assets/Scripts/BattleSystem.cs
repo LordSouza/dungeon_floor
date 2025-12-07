@@ -126,12 +126,14 @@ public class BattleSystem : MonoBehaviour
             data.playerDamage = _playerUnit.damage;
             
             GameManager.Instance.data.playerCurrentHP = _playerUnit.currentHp;
-            GameManager.Instance.Save();
+            
+            // Add enemy to death records (new respawn system)
             if (!string.IsNullOrEmpty(data.lastEnemyID))
             {
-                data.deadEnemies.Add(data.lastEnemyID);
+                RecordEnemyDeath(data, data.lastEnemyID);
                 data.lastEnemyID = null;
             }
+            
             GameManager.Instance.Save();
             
             
