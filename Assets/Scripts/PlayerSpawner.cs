@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerSpawn : MonoBehaviour
+public class PlayerSpawner : MonoBehaviour
 {
     public Transform initialSpawnPoint; 
     public GameObject player;         
