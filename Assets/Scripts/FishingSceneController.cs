@@ -2,26 +2,36 @@ using UnityEngine;
 
 /// <summary>
 /// Script para iniciar automaticamente o minigame de pesca quando a FishingScene carrega
-/// Adicione este script em um GameObject na FishingScene
+/// Adicione este script em QUALQUER GameObject na FishingScene (pode ser vazio)
+/// Não precisa configurar nada - busca automaticamente!
 /// </summary>
 public class FishingSceneController : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private FishingMinigame fishingMinigame;
-    
     void Start()
     {
         Debug.Log("=== FishingSceneController Start() ===");
         
-        // Iniciar o minigame automaticamente
+        // Buscar FishingMinigame automaticamente na cena
+        FishingMinigame fishingMinigame = FindFirstObjectByType<FishingMinigame>();
+        
         if (fishingMinigame != null)
         {
-            Debug.Log($"Iniciando minigame em: {fishingMinigame.gameObject.name}");
-            fishingMinigame.StartFishing();
+            Debug.Log($"FishingMinigame encontrado em: {fishingMinigame.gameObject.name}");
+            
+            // Pequeno delay para garantir que tudo inicializou
+            StartCoroutine(StartFishingAfterDelay(fishingMinigame, 0.1f));
         }
         else
         {
-            Debug.LogError("FishingMinigame não está atribuído no FishingSceneController! Arraste o componente no Inspector!");
+            Debug.LogError("FishingMinigame NÃO encontrado na cena! Adicione o componente FishingMinigame em algum GameObject!");
         }
+    }
+    
+    System.Collections.IEnumerator StartFishingAfterDelay(FishingMinigame minigame, float delay)
+    {
+        yield return new UnityEngine.WaitForSeconds(delay);
+        
+        Debug.Log("Iniciando pesca...");
+        minigame.StartFishing();
     }
 }
