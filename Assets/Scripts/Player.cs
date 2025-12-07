@@ -29,10 +29,8 @@ public class Player : MonoBehaviour
         {
             _playerRb.linearVelocityY = jumpIntensity;
             bool isJumping = Mathf.Abs(_playerRb.linearVelocityX) > Mathf.Epsilon;
-
             _playerSpriteAnimator.SetBool("IsJumping",isJumping);
             _canDoubleJump = true;
-            return;
         }
 
         if (_canDoubleJump)

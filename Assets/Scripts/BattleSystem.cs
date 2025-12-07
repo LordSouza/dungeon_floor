@@ -238,6 +238,7 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator PlayerHeal()
     {
         audioSource.PlayOneShot(playerHealSound);
+        playerAnimator.SetTrigger("heal");
 
         int totalHeal = 4 + extraHealingFromQte;
         extraHealingFromQte = 0;
