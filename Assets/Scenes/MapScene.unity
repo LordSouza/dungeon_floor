@@ -8679,7 +8679,7 @@ GameObject:
   - component: {fileID: 1064156885}
   - component: {fileID: 1064156887}
   - component: {fileID: 1064156886}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PromptText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9065,7 +9065,7 @@ GameObject:
   - component: {fileID: 1517063595}
   - component: {fileID: 1517063597}
   - component: {fileID: 1517063596}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: FishingPromptPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9459,7 +9459,7 @@ GameObject:
   - component: {fileID: 1729202016}
   - component: {fileID: 1729202015}
   - component: {fileID: 1729202014}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
