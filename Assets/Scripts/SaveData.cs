@@ -52,6 +52,9 @@ public class SaveData
     public int respawnAfterSceneLoads = 1; // Enemies respawn after X scene loads
     public List<EnemySpawnPoint> enemySpawnPoints = new List<EnemySpawnPoint>(); // Valid spawn positions
     public bool enableRandomSpawns = true; // Toggle random spawning
+    
+    // Battle immunity system
+    public bool justReturnedFromBattle = false;
 
     // player stats
     public int playerLevel = 1;

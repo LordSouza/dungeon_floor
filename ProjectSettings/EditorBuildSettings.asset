@@ -17,12 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DefeatScene.unity
     guid: a5d5dd98f905c964ca922aa21a0126a7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/WinnerScene.unity
     guid: a5461b8e38e91b245a0789a428cfcb6d
   - enabled: 1
     path: Assets/Scenes/MapScene.unity
     guid: 67d077e316de61b4ab54304a83a5dad3
+  - enabled: 1
+    path: Assets/Scenes/FishingScene.unity
+    guid: 4ce01e75416a62e4b94c7760f2055e23
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

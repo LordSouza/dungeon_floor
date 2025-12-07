@@ -222,6 +222,9 @@ public class BattleSystem : MonoBehaviour
     {
         if (state == BattleState.WON)
         {
+            // Mark that player is returning from battle (for immunity)
+            GameManager.Instance.data.justReturnedFromBattle = true;
+            
             GameManager.Instance.MarkEnemyAsDead(GameManager.Instance.data.lastEnemyID);
             SceneManager.LoadScene("MapScene");
         } else if (state == BattleState.LOST)
@@ -316,22 +319,23 @@ public class BattleSystem : MonoBehaviour
     
     IEnumerator UseItem()
     {
-        // Use fish item
-        int healAmount = 12; // Fish heals 12 HP
+        // Use fish item - heals to full HP
+        int healAmount = _playerUnit.MaxHp - _playerUnit.currentHp;
         _playerUnit.Heal(healAmount);
         
         // Decrement fish count
         GameManager.Instance.data.fishCount--;
         GameManager.Instance.Save();
         
-        dialogueText.text = $"Você usou um peixe! Recuperou {healAmount} HP! (Restam: {GameManager.Instance.data.fishCount})";
+        dialogueText.text = $"Você usou um peixe! Vida restaurada! (Restam: {GameManager.Instance.data.fishCount})";
         
         playerHUD.setHP(_playerUnit.currentHp);
         
         yield return new WaitForSeconds(1.5f);
         
-        state = BattleState.ENEMYTURN;
-        StartCoroutine(EnemyTurn());
+        // Não consome turno - volta para escolha do player
+        dialogueText.text = "Escolha uma ação";
+        playerButtonsPanel.SetActive(true);
     }
     
     // Calculate XP reward based on level difference for more interesting progression
