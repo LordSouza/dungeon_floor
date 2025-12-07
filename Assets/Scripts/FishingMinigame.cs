@@ -12,6 +12,8 @@ public class FishingMinigame : MonoBehaviour
     public RectTransform successZone;
     public TextMeshProUGUI instructionText;
     public TextMeshProUGUI resultText;
+    public TextMeshProUGUI fishCountText; // Contador de peixes
+    public Button exitButton; // Botão para sair
     
     [Header("Settings")]
     public float indicatorSpeed = 2f;
@@ -90,6 +92,12 @@ public class FishingMinigame : MonoBehaviour
         {
             AttemptCatch();
         }
+        
+        // Listen for exit (ESC key)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CancelFishing();
+        }
     }
     
     public void StartFishing()
@@ -116,6 +124,16 @@ public class FishingMinigame : MonoBehaviour
         }
         
         Debug.Log($"fishingUI: {fishingUI.name}, ativo antes: {fishingUI.activeSelf}");
+        
+        // Setup exit button
+        if (exitButton != null)
+        {
+            exitButton.onClick.RemoveAllListeners();
+            exitButton.onClick.AddListener(CancelFishing);
+        }
+        
+        // Update fish count display
+        UpdateFishCountDisplay();
         
         // Setup success zone (random position)
         successZoneStart = Random.Range(0.1f, 0.9f - successZoneSize);
@@ -178,7 +196,9 @@ public class FishingMinigame : MonoBehaviour
             GameManager.Instance.Save();
             
             if (resultText != null)
-                resultText.text = $"SUCCESS! You caught a fish! (Total: {GameManager.Instance.data.fishCount})";
+                resultText.text = $"SUCCESS! You caught a fish!";
+            
+            UpdateFishCountDisplay();
         }
         else
         {
@@ -187,16 +207,32 @@ public class FishingMinigame : MonoBehaviour
                 resultText.text = "The fish got away... Try again!";
         }
         
-        // Close UI after delay
-        StartCoroutine(CloseAfterDelay(2f));
+        // Reiniciar após delay (não fechar mais)
+        StartCoroutine(RestartFishingAfterDelay(2f));
     }
     
-    IEnumerator CloseAfterDelay(float delay)
+    IEnumerator RestartFishingAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         
-        // Voltar para o MapScene
-        ReturnToMap();
+        // Limpar texto de resultado
+        if (resultText != null)
+            resultText.text = "";
+        
+        // Reposicionar success zone aleatoriamente
+        successZoneStart = Random.Range(0.1f, 0.9f - successZoneSize);
+        successZoneEnd = successZoneStart + successZoneSize;
+        
+        if (successZone != null)
+        {
+            successZone.anchorMin = new Vector2(successZoneStart, 0);
+            successZone.anchorMax = new Vector2(successZoneEnd, 1);
+        }
+        
+        // Reset state
+        currentProgress = 0f;
+        movingRight = true;
+        isPlaying = true;
     }
     
     public void ReturnToMap()
@@ -218,5 +254,13 @@ public class FishingMinigame : MonoBehaviour
     {
         isPlaying = false;
         ReturnToMap();
+    }
+    
+    void UpdateFishCountDisplay()
+    {
+        if (fishCountText != null)
+        {
+            fishCountText.text = $"Fish: {GameManager.Instance.data.fishCount}";
+        }
     }
 }
