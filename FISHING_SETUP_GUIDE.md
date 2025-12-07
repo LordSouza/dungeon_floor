@@ -245,6 +245,30 @@ public void UpdateFishCount()
 
 ---
 
+## 🔄 New Feature: Continuous Fishing!
+
+### How It Works:
+
+**The fishing minigame now loops automatically:**
+- After catching (success or failure), wait 2 seconds
+- Minigame **restarts automatically** with new random green zone
+- Player can fish **as many times as they want**
+- Fish counter updates in real-time
+- **Exit anytime** with ESC key or Exit button
+
+**Controls:**
+- **SPACE or E**: Attempt to catch fish
+- **ESC**: Exit fishing and return to map
+- **Exit Button**: Same as ESC
+
+**Benefits:**
+- No need to re-enter fishing spot each time
+- Farm fish efficiently
+- Counter shows total fish collected
+- Leave when you're satisfied
+
+---
+
 ## ⚙️ Configuration Options
 
 ### Adjust Difficulty:
