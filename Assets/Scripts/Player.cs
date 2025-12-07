@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     float _xDir;
     bool _canDoubleJump;
     bool _takingDmg;
+    bool _isGrounded = false;
     
     [SerializeField] float speedX;
     [SerializeField] float jumpIntensity;
@@ -22,14 +24,23 @@ public class Player : MonoBehaviour
         _playerSpriteAnimator = GetComponentInChildren<Animator>();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground"))){
+            _isGrounded = true;
+            _playerSpriteAnimator.SetBool("IsJumping", !_isGrounded);
+            _canDoubleJump = false;
+        }
+    }
+
     void OnJump(InputValue inputValue)
     {
 
-        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+        if (_isGrounded)
         {
             _playerRb.linearVelocityY = jumpIntensity;
-            bool isJumping = Mathf.Abs(_playerRb.linearVelocityX) > Mathf.Epsilon;
-            _playerSpriteAnimator.SetBool("IsJumping",isJumping);
+            _isGrounded = false;
+            _playerSpriteAnimator.SetBool("IsJumping", !_isGrounded);
             _canDoubleJump = true;
         }
 
@@ -39,8 +50,10 @@ public class Player : MonoBehaviour
             _canDoubleJump = false;
             _playerSpriteAnimator.SetTrigger("DoubleJump");
         }
-            
+        
     }
+    
+    
     
     void OnMove(InputValue inputValue)
     {
@@ -68,6 +81,9 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         MovePlayer();
+        _playerSpriteAnimator.SetFloat("xVelocity", Math.Abs(_playerRb.linearVelocity.x));
+        _playerSpriteAnimator.SetFloat("yVelocity", _playerRb.linearVelocity.y);
+        
     }
 
     void OnCollisionEnter2D(Collision2D other)
