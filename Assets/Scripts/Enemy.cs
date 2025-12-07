@@ -24,11 +24,19 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Foreground"))    
             FlipSprite();
+<<<<<<< HEAD
+=======
+        // Não destruir ao colidir com Player - a batalha é iniciada pelo Player.cs
+>>>>>>> b6199364f7b3d5aae19a8e84c9a2c8dba3f670c5
     }
 
     public void KillEnemy()
     {
         GameObject poof = Instantiate(enemyPoof, transform.position, Quaternion.identity);
+<<<<<<< HEAD
+=======
+        // Garantir que o efeito seja destruído mesmo se a cena mudar
+>>>>>>> b6199364f7b3d5aae19a8e84c9a2c8dba3f670c5
         Destroy(poof, 0.8f);
         Destroy(gameObject);
     }
