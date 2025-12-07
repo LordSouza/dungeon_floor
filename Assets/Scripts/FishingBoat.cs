@@ -21,6 +21,9 @@ public class FishingBoat : MonoBehaviour
 
     void Start()
     {
+        // TESTE: Log que sempre aparece
+        Debug.LogError("★★★ FISHING BOAT INICIADO - SE VOCÊ VÊ ISSO, O CONSOLE FUNCIONA! ★★★");
+        
         // Verificar se UI está configurada
         if (promptPanel == null && showDebugMessages)
         {
