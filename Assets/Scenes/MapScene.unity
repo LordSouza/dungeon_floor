@@ -8203,8 +8203,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.018894196, y: 0.11498433}
-  m_Size: {x: 0.4622116, y: 1.016981}
+  m_Offset: {x: -0.041636467, y: 0.33102942}
+  m_Size: {x: 1.0534916, y: 1.6310039}
   m_Direction: 0
 --- !u!114 &699216566
 MonoBehaviour:
@@ -8983,7 +8983,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.015295982, y: -0.020395398}
+  m_Offset: {x: 0.3621049, y: -0.020395398}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -8993,7 +8993,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 2}
+  m_Size: {x: 2.3063822, y: 2}
   m_EdgeRadius: 0
 --- !u!1001 &1315306370
 PrefabInstance:
