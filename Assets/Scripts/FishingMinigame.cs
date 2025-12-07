@@ -29,38 +29,23 @@ public class FishingMinigame : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("=== FishingMinigame Start() ===");
-        
         if (fishingUI != null)
         {
-            Debug.Log($"Desativando fishingUI: {fishingUI.name}");
             fishingUI.SetActive(false);
         }
         else
         {
-            Debug.LogError("fishingUI é NULL no Start()! Configure no Inspector!");
+            Debug.LogError("fishingUI é NULL! Configure no Inspector!");
         }
         
         if (progressSlider == null)
             Debug.LogError("progressSlider é NULL! Configure no Inspector!");
-        if (successZone == null)
-            Debug.LogWarning("successZone é NULL! Configure no Inspector!");
-        if (instructionText == null)
-            Debug.LogWarning("instructionText é NULL! Configure no Inspector!");
-        if (resultText == null)
-            Debug.LogWarning("resultText é NULL! Configure no Inspector!");
     }
     
     void Update()
     {
         if (!isPlaying)
             return;
-        
-        // Debug a cada segundo
-        if (Time.frameCount % 60 == 0)
-        {
-            Debug.Log($"Pescando... Progress: {currentProgress:F2}, CanCatch: {canCatch}");
-        }
         
         // Move indicator
         if (movingRight)
@@ -102,28 +87,14 @@ public class FishingMinigame : MonoBehaviour
     
     public void StartFishing()
     {
-        Debug.Log("=== StartFishing() CHAMADO ===");
-        
         if (isPlaying)
+            return;
+        
+        if (fishingUI == null || progressSlider == null)
         {
-            Debug.LogWarning("Já está pescando!");
+            Debug.LogError("FishingMinigame: Referências não configuradas no Inspector!");
             return;
         }
-        
-        // Verificar referências
-        if (fishingUI == null)
-        {
-            Debug.LogError("fishingUI é NULL! Atribua no Inspector!");
-            return;
-        }
-        
-        if (progressSlider == null)
-        {
-            Debug.LogError("progressSlider é NULL! Atribua no Inspector!");
-            return;
-        }
-        
-        Debug.Log($"fishingUI: {fishingUI.name}, ativo antes: {fishingUI.activeSelf}");
         
         // Setup exit button
         if (exitButton != null)
@@ -132,25 +103,16 @@ public class FishingMinigame : MonoBehaviour
             exitButton.onClick.AddListener(CancelFishing);
         }
         
-        // Update fish count display
         UpdateFishCountDisplay();
         
         // Setup success zone (random position)
         successZoneStart = Random.Range(0.1f, 0.9f - successZoneSize);
         successZoneEnd = successZoneStart + successZoneSize;
         
-        Debug.Log($"Success Zone: {successZoneStart:F2} - {successZoneEnd:F2}");
-        
-        // Position success zone visual
         if (successZone != null)
         {
             successZone.anchorMin = new Vector2(successZoneStart, 0);
             successZone.anchorMax = new Vector2(successZoneEnd, 1);
-            Debug.Log("Success Zone posicionada");
-        }
-        else
-        {
-            Debug.LogWarning("successZone é NULL!");
         }
         
         // Reset state
@@ -158,28 +120,14 @@ public class FishingMinigame : MonoBehaviour
         movingRight = true;
         isPlaying = true;
         
-        // Show UI - FORÇAR ATIVAÇÃO
+        // Show UI
         fishingUI.SetActive(true);
-        Debug.Log($"fishingUI ativado! Ativo agora: {fishingUI.activeSelf}");
         
         if (instructionText != null)
-        {
             instructionText.text = "Press SPACE or E when indicator is in GREEN zone!";
-            Debug.Log("Texto de instrução definido");
-        }
-        else
-        {
-            Debug.LogWarning("instructionText é NULL!");
-        }
         
         if (resultText != null)
-        {
             resultText.text = "";
-        }
-        else
-        {
-            Debug.LogWarning("resultText é NULL!");
-        }
         
         // Pause player movement
         Time.timeScale = 1f; // Keep running for smooth animation

@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         _enemyPlayerRb = GetComponent<Rigidbody2D>();
-        if (GameManager.Instance.data.deadEnemies.Contains(enemyId))
-          Destroy(gameObject);
     }
 
     void FixedUpdate()
@@ -26,12 +24,12 @@ public class Enemy : MonoBehaviour
     {
         if(other.CompareTag("Foreground"))    
             FlipSprite();
-        if(other.CompareTag("Player"))    
-            KillEnemy();
     }
 
     public void KillEnemy()
     {
+        GameObject poof = Instantiate(enemyPoof, transform.position, Quaternion.identity);
+        Destroy(poof, 0.8f);
         Destroy(gameObject);
     }
 
