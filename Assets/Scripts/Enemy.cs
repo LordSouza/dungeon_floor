@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject enemyPoof;
     public string enemyId;
     float _enemyDir = 1;
+    public int enemyLevel;
     
     void Awake()
     {

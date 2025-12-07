@@ -6560,8 +6560,8 @@ Transform:
   m_GameObject: {fileID: 252876394}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.06, y: 0.9772, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1055059564}
@@ -6610,7 +6610,7 @@ SpriteRenderer:
   m_SortingLayerID: -521576499
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4529042392078601758, guid: 99bde6f199fbd6c40aeafd3edf46d2ab, type: 3}
+  m_Sprite: {fileID: 8447237637920451778, guid: 4863f871bb8ddb34886d237af8a28a8f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6631,7 +6631,7 @@ Animator:
   m_GameObject: {fileID: 252876394}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 065309b4e3aa0d3438f356744cd4ac3c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 24a1df489ade3cb4ab80f9ef2649fd99, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -7370,8 +7370,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.018894196, y: -0.024047047}
-  m_Size: {x: 0.4622116, y: 0.73891824}
+  m_Offset: {x: -0.018894196, y: 0.11498433}
+  m_Size: {x: 0.4622116, y: 1.016981}
   m_Direction: 0
 --- !u!114 &699216566
 MonoBehaviour:
@@ -7622,14 +7622,13 @@ Transform:
   m_GameObject: {fileID: 1055059563}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.87, y: -2.53, z: 0}
+  m_LocalPosition: {x: -23.871, y: -2.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 252876395}
   - {fileID: 699216564}
   - {fileID: 2050011552}
-  - {fileID: 1480068951}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1055059565
@@ -7754,6 +7753,19 @@ MonoBehaviour:
     lastEnemyID: 
     hasSpawnedOnce: 0
     deadEnemies: []
+    enemyDeathRecords: []
+    totalSceneLoads: 0
+    respawnAfterSceneLoads: 1
+    enemySpawnPoints: []
+    enableRandomSpawns: 1
+    playerLevel: 1
+    playerXP: 0
+    playerXPToNextLevel: 10
+    playerMaxHP: 20
+    playerDamage: 5
+    playerCurrentHP: 20
+    fishCount: 0
+    currentEnemyLevel: 1
 --- !u!1 &1109225808
 GameObject:
   m_ObjectHideFlags: 0
@@ -7922,37 +7934,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
---- !u!1 &1480068950
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1480068951}
-  m_Layer: 7
-  m_Name: ShootPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1480068951
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480068950}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.123, y: -0.203, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1055059564}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1543385925 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5178111384447399237, guid: 93d263dbbb84b714995c2b03e163d25e, type: 3}
@@ -8153,7 +8134,7 @@ Transform:
   m_GameObject: {fileID: 1721047833}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.048042, y: -6.6827774, z: -9.828801}
+  m_LocalPosition: {x: -24.049042, y: -6.6827774, z: -9.828801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

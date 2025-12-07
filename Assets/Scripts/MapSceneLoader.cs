@@ -92,7 +92,7 @@ public class MapSceneLoader : MonoBehaviour
         bool shouldFlip = Random.value > 0.5f;
         if (shouldFlip)
         {
-            enemy.FlipDirection();
+            //enemy.FlipDirection();
             Debug.Log($"Enemy {enemy.enemyId} spawned at random position: ({randomSpawn.x}, {randomSpawn.y}) - Direction FLIPPED");
         }
         else

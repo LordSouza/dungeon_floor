@@ -24,9 +24,13 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue inputValue)
     {
+
         if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
         {
             _playerRb.linearVelocityY = jumpIntensity;
+            bool isJumping = Mathf.Abs(_playerRb.linearVelocityX) > Mathf.Epsilon;
+
+            _playerSpriteAnimator.SetBool("IsJumping",isJumping);
             _canDoubleJump = true;
             return;
         }
