@@ -50,6 +50,7 @@ public class BattleSystem : MonoBehaviour
         playerAnimator = playerGo.GetComponentInChildren<Animator>();
         _playerUnit.unitLevel = GameManager.Instance.data.playerLevel;
         _playerUnit.currentXP = GameManager.Instance.data.playerXP;
+        _playerUnit.xpToNextLevel = GameManager.Instance.data.playerXPToNextLevel;
 
         _playerUnit.MaxHp = GameManager.Instance.data.playerMaxHP;
         _playerUnit.currentHp = GameManager.Instance.data.playerCurrentHP;
@@ -117,6 +118,7 @@ public class BattleSystem : MonoBehaviour
             SaveData data = GameManager.Instance.data;
             data.playerLevel = _playerUnit.unitLevel;
             data.playerXP = _playerUnit.currentXP;
+            data.playerXPToNextLevel = _playerUnit.xpToNextLevel;
             data.playerMaxHP = _playerUnit.MaxHp;
             data.playerDamage = _playerUnit.damage;
             
@@ -284,6 +286,48 @@ public class BattleSystem : MonoBehaviour
         {
             StartCoroutine(PlayerHeal());
         }
+    }
+    
+    // Calculate XP reward based on level difference for more interesting progression
+    int CalculateXPReward(int playerLevel, int enemyLevel)
+    {
+        // Base XP scales with enemy level
+        int baseXP = enemyLevel * 5;
+        
+        // Level difference multiplier
+        int levelDiff = enemyLevel - playerLevel;
+        float multiplier = 1.0f;
+        
+        if (levelDiff >= 3)
+        {
+            // Fighting much stronger enemies gives bonus XP
+            multiplier = 1.5f + (levelDiff * 0.1f);
+        }
+        else if (levelDiff >= 1)
+        {
+            // Fighting slightly stronger enemies gives small bonus
+            multiplier = 1.2f + (levelDiff * 0.1f);
+        }
+        else if (levelDiff == 0)
+        {
+            // Same level = normal XP
+            multiplier = 1.0f;
+        }
+        else if (levelDiff >= -2)
+        {
+            // Fighting slightly weaker enemies gives reduced XP
+            multiplier = 0.8f + (levelDiff * 0.1f);
+        }
+        else
+        {
+            // Fighting much weaker enemies gives minimal XP
+            multiplier = 0.5f;
+        }
+        
+        int finalXP = Mathf.RoundToInt(baseXP * multiplier);
+        
+        // Minimum XP reward
+        return Mathf.Max(finalXP, 1);
     }
 
 }
